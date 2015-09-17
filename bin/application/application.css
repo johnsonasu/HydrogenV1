@@ -1,0 +1,27 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.subpanes{
+	-fx-background-color:rgba(245,245,245,245);
+	-fx-effect:dropshadow(gaussian, black,10,.1,2,2);
+}
+.panesubs{
+	-fx-font-size:22;
+	-fx-font-family:arial;
+	-fx-font-smoothing-type: lcd;
+}
+.uneditableTBs{
+	-fx-background-color:rgb(230,230,230);
+	-fx-alignment:center-right;
+	-fx-font-family:arial;
+	-fx-font-size:12;
+	-fx-max-width:150px;
+}
+.editableTBs{
+	-fx-alignment:center-right;
+	-fx-font-family:arial;
+	-fx-font-size:12;
+	-fx-max-width:150px;
+}
+.menuTitles{
+	-fx-font-family:arial;
+	-fx-font-size:15;
+}

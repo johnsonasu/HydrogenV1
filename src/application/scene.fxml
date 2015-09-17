@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="746.0" prefWidth="1336.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SceneController">
+   <children>
+      <Pane layoutX="46.0" layoutY="37.0" prefHeight="224.0" prefWidth="348.0" styleClass="subpanes">
+         <children>
+            <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Receiver/Solar Field" />
+            <GridPane layoutX="21.0" layoutY="40.0" prefHeight="179.0" prefWidth="308.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="149.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="106.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="59.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Solar DNI:" />
+                  <Label text="Concentration Factor:" GridPane.rowIndex="1" />
+                  <Label text="Transmissivity:" GridPane.rowIndex="2" />
+                  <Label text="Emissivity:" GridPane.rowIndex="3" />
+                  <Label text="Reflectivity 1:" GridPane.rowIndex="4" />
+                  <Label text="Reflectivity 2:" GridPane.rowIndex="5" />
+                  <TextField styleClass="editableTBs" GridPane.columnIndex="1" />
+                  <TextField styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="W/m²" GridPane.columnIndex="2" />
+                  <Label text="Aperture Area:" GridPane.rowIndex="6" />
+                  <Label text="m²" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <TextField styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+               </children>
+            </GridPane>
+         </children></Pane>
+      <Pane layoutX="46.0" layoutY="275.0" prefHeight="106.0" prefWidth="348.0" styleClass="subpanes">
+         <children>
+            <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Efficiencies" />
+            <GridPane layoutX="14.0" layoutY="41.0" prefHeight="60.0" prefWidth="308.0">
+               <children>
+                  <Label text="Solar to Electricity:" />
+                  <Label text="Window Transmission:" GridPane.rowIndex="1" />
+                  <TextField styleClass="editableTBs" GridPane.columnIndex="1" />
+                  <TextField styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="\%" GridPane.columnIndex="2" />
+                  <Label text="\%" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="141.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="111.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="47.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </children>
+      </Pane>
+      <Pane layoutX="46.0" layoutY="397.0" prefHeight="106.0" prefWidth="348.0" styleClass="subpanes">
+         <children>
+            <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Temperatures" />
+            <GridPane layoutX="14.0" layoutY="34.0" prefHeight="60.0" prefWidth="308.0">
+               <children>
+                  <Label text="Reduction Temp:" />
+                  <Label text="Oxidation Temp:" GridPane.rowIndex="1" />
+                  <TextField prefHeight="23.0" prefWidth="100.0" styleClass="editableTBs" GridPane.columnIndex="1" />
+                  <TextField styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="K" GridPane.columnIndex="2" />
+                  <Label text="K" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="140.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="110.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="48.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </children>
+      </Pane>
+      <Pane layoutX="902.0" layoutY="43.0" prefHeight="210.0" prefWidth="348.0" styleClass="subpanes">
+         <children>
+            <Label layoutX="24.0" layoutY="14.0" styleClass="panesubs" text="Material Properties" textFill="#1500ff" />
+            <GridPane layoutX="18.0" layoutY="48.0" prefHeight="150.0" prefWidth="323.0">
+               <children>
+                  <Label text="Fuel Molar Mass:" />
+                  <Label text="Fuel Specific Heat:" GridPane.rowIndex="1" />
+                  <Label text="Fuel Power Density:" GridPane.rowIndex="2" />
+                  <Label text="Specific Heat O2:" GridPane.rowIndex="3" />
+                  <Label text="Specific Heat H2:" GridPane.rowIndex="4" />
+                  <TextField editable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" />
+                  <TextField editable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField editable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField editable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField editable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label text="kg/mol" GridPane.columnIndex="2" />
+                  <Label text="J/molK" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="kg/mol³" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label text="J/molK" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label text="J/molK" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="140.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="113.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="68.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </children>
+      </Pane>
+      <Pane layoutX="46.0" layoutY="624.0" prefHeight="106.0" prefWidth="348.0" styleClass="subpanes">
+         <children>
+            <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Output" textFill="#ae1313" />
+            <GridPane layoutX="14.0" layoutY="50.0" prefHeight="39.0" prefWidth="302.0">
+               <children>
+                  <Label text="Solar To Fuel Efficiency:" />
+                  <TextField editable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" />
+                  <Label text="\%" GridPane.columnIndex="2" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="146.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="111.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="35.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <Button layoutX="176.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="90.0" text="Calculate" />
+         </children>
+      </Pane>
+      <Pane layoutX="46.0" layoutY="519.0" prefHeight="87.0" prefWidth="348.0" styleClass="subpanes">
+         <children>
+            <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Heat" />
+            <GridPane layoutX="13.0" layoutY="40.0" prefHeight="39.0" prefWidth="323.0">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="158.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="157.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <RadioButton mnemonicParsing="false" selected="true" text="Higher Heating Value">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="heatRadios" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" text="Lower Heating Value" toggleGroup="$heatRadios" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Pane layoutX="456.0" layoutY="69.0" prefHeight="150.0" prefWidth="382.0" styleClass="subpanes">
+         <children>
+            <Label layoutX="26.0" layoutY="14.0" styleClass="panesubs" text="Receiver/Solar Field" textFill="#1500ff" />
+            <GridPane layoutX="26.0" layoutY="49.0" prefHeight="87.0" prefWidth="348.0">
+               <children>
+                  <Label text="Dirt Factor:" />
+                  <Label text="Window Transmission:" GridPane.rowIndex="1" />
+                  <Label text="Receiver Intercept" GridPane.rowIndex="2" />
+                  <TextField editable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" />
+                  <TextField editable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField editable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="156.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="112.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="57.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </children>
+      </Pane>
+      <StackedAreaChart fx:id="h2Graph" layoutX="440.0" layoutY="267.0" prefHeight="460.0" prefWidth="858.0">
+        <xAxis>
+          <NumberAxis prefHeight="49.0" prefWidth="793.0" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </StackedAreaChart>
+      <MenuBar disable="true" layoutY="-6.0" prefHeight="33.0" prefWidth="1336.0" styleClass="menuTitles">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
