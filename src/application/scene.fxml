@@ -6,9 +6,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="1336.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1400.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SceneController">
    <children>
-      <StackedAreaChart fx:id="h2Graph" layoutX="440.0" layoutY="258.0" prefHeight="444.0" prefWidth="838.0">
+      <StackedAreaChart fx:id="h2Graph" layoutX="441.0" layoutY="275.0" prefHeight="523.0" prefWidth="903.0">
         <xAxis>
           <NumberAxis prefHeight="49.0" prefWidth="793.0" side="BOTTOM" />
         </xAxis>
@@ -43,20 +43,20 @@
                   <Label text="Emissivity" GridPane.rowIndex="3" />
                   <Label text="Reflectivity 1" GridPane.rowIndex="4" />
                   <Label text="Reflectivity 2" GridPane.rowIndex="5" />
-                  <TextField promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" />
-                  <TextField promptText="1800.0 - 3000.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="solarDNI" onKeyReleased="#solarDNIKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" />
+                  <TextField fx:id="conFactor" onKeyReleased="#conFactorKeyReleased" promptText="1800.0 - 3000.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="trans" onKeyReleased="#transKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="emiss" onKeyReleased="#emissKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="W/m²" GridPane.columnIndex="2" />
                   <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <TextField promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="reflectOne" onKeyReleased="#reflectOneKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                   <Label text="Concentration Factor" GridPane.rowIndex="1" />
                   <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Label text="Aperture Area" GridPane.rowIndex="6" />
-                  <TextField promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="reflectTwo" onKeyReleased="#reflectTwo" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label text="m²" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                   <Label text="Dirt Factor" GridPane.rowIndex="7" />
                   <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="7" />
@@ -64,24 +64,30 @@
                   <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                   <Label text="Receiver Intercept" GridPane.rowIndex="9" />
                   <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-                  <TextField promptText="0.0 - 2.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField fx:id="aperture" onKeyReleased="#apertureKeyReleased" promptText="0.0 - 2.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField fx:id="recIntercept" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="0.95" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField fx:id="dirtFactor" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="0.95" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="winTrans" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="0.95" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                </children>
             </GridPane>
          </children></Pane>
-      <Pane layoutX="46.0" layoutY="378.0" prefHeight="106.0" prefWidth="348.0" styleClass="subpanes">
+      <Pane layoutX="46.0" layoutY="378.0" prefHeight="183.0" prefWidth="348.0" styleClass="subpanes">
          <children>
             <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Efficiencies" />
-            <GridPane layoutX="21.0" layoutY="41.0" prefHeight="60.0" prefWidth="308.0">
+            <GridPane layoutX="21.0" layoutY="41.0" prefHeight="136.0" prefWidth="308.0">
                <children>
                   <Label text="Solar to Electricity" />
-                  <Label text="Window Transmission" GridPane.rowIndex="1" />
-                  <TextField promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" />
-                  <TextField promptText="0.0 -1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Heat to Electricity" GridPane.rowIndex="1" />
+                  <TextField fx:id="solarToElec" onKeyReleased="#solarToElecKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" />
+                  <TextField fx:id="heatToElec" onKeyReleased="#heatToElecKeyReleased" promptText="0.0 -1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="\%" GridPane.columnIndex="2" />
                   <Label text="\%" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="Lifting (Elevator)" GridPane.rowIndex="2" />
+                  <Label text="Electricity to Pumping" GridPane.rowIndex="3" />
+                  <Label text="Solid - Solid Recuperator" GridPane.rowIndex="4" />
+                  <TextField fx:id="lifting" onKeyReleased="#liftingKeyReleased" promptText="0.0 -1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="elecToPump" onKeyReleased="#elecToPumpKeyReleased" promptText="0.0 -1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="solidToSolid" onKeyReleased="#solidToSolidKeyReleased" promptText="0.0 -1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
                <columnConstraints>
                   <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="155.0" minWidth="10.0" prefWidth="155.0" />
@@ -91,19 +97,22 @@
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
          </children>
       </Pane>
-      <Pane layoutX="46.0" layoutY="497.0" prefHeight="106.0" prefWidth="348.0" styleClass="subpanes">
+      <Pane layoutX="46.0" layoutY="573.0" prefHeight="106.0" prefWidth="348.0" styleClass="subpanes">
          <children>
             <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Redox Temperatures" />
             <GridPane layoutX="21.0" layoutY="41.0" prefHeight="60.0" prefWidth="308.0">
                <children>
                   <Label text="Reduction Temp" />
                   <Label text="Oxidation Temp" GridPane.rowIndex="1" />
-                  <TextField prefHeight="23.0" prefWidth="100.0" promptText="1673.0 - 1873.0" styleClass="editableTBs" GridPane.columnIndex="1" />
-                  <TextField promptText="873.0 - 1673.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="reducTemp" onKeyReleased="#reducTempKeyReleased" prefHeight="23.0" prefWidth="100.0" promptText="1673.0 - 1873.0" styleClass="editableTBs" GridPane.columnIndex="1" />
+                  <TextField fx:id="oxiTemp" onKeyReleased="#oxiTempKeyReleased" promptText="873.0 - 1673.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="K" GridPane.columnIndex="2" />
                   <Label text="K" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                </children>
@@ -119,7 +128,7 @@
             </GridPane>
          </children>
       </Pane>
-      <Pane layoutX="463.0" layoutY="37.0" prefHeight="199.0" prefWidth="348.0" styleClass="subpanes">
+      <Pane layoutX="481.0" layoutY="37.0" prefHeight="199.0" prefWidth="348.0" styleClass="subpanes">
          <children>
             <Label layoutX="20.0" layoutY="14.0" styleClass="panesubs" text="Material Properties" />
             <GridPane layoutX="21.0" layoutY="41.0" prefHeight="150.0" prefWidth="308.0">
@@ -128,12 +137,12 @@
                   <Label text="Fuel Specific Heat" GridPane.rowIndex="1" />
                   <Label text="Fuel Power Density" GridPane.rowIndex="2" />
                   <Label text="Specific Heat O2" GridPane.rowIndex="3" />
-                  <Label text="Specific Heat H2" GridPane.rowIndex="4" />
-                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" />
-                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label fx:id="specHeatH2" text="Specific Heat H2" GridPane.rowIndex="4" />
+                  <TextField fx:id="fuelMolarMass" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="172.005" GridPane.columnIndex="1" />
+                  <TextField fx:id="fuelSpecHeat" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="fuelPowerDensity" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="1500.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="specHeatO2" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="29.4" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" text="28.8" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="kg/mol" GridPane.columnIndex="2" />
                   <Label text="J/molK" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Label text="kg/mol³" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -155,13 +164,13 @@
             </GridPane>
          </children>
       </Pane>
-      <Pane layoutX="882.0" layoutY="69.0" prefHeight="136.0" prefWidth="348.0" styleClass="subpanes">
+      <Pane layoutX="913.0" layoutY="75.0" prefHeight="136.0" prefWidth="348.0" styleClass="subpanes">
          <children>
             <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Output" />
             <GridPane layoutX="21.0" layoutY="64.0" prefHeight="39.0" prefWidth="308.0">
                <children>
                   <Label text="Solar To Fuel Efficiency" />
-                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" />
+                  <TextField fx:id="solarToFuelEfficiency" editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" />
                   <Label text="\%" GridPane.columnIndex="2" />
                </children>
                <columnConstraints>
@@ -173,10 +182,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <Button layoutX="184.0" layoutY="23.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="90.0" text="Calculate" />
+            <Button layoutX="184.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#onCalculate" prefHeight="33.0" prefWidth="90.0" text="Calculate" />
          </children>
       </Pane>
-      <Pane layoutX="46.0" layoutY="616.0" prefHeight="87.0" prefWidth="348.0" styleClass="subpanes">
+      <Pane layoutX="46.0" layoutY="692.0" prefHeight="87.0" prefWidth="348.0" styleClass="subpanes">
          <children>
             <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Heat of Combustion" />
             <GridPane layoutX="13.0" layoutY="40.0" prefHeight="39.0" prefWidth="323.0">
@@ -188,7 +197,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <RadioButton mnemonicParsing="false" selected="true" text="Higher Heating Value">
+                  <RadioButton fx:id="higherHeatingRadio" mnemonicParsing="false" selected="true" text="Higher Heating Value">
                      <toggleGroup>
                         <ToggleGroup fx:id="heatRadios" />
                      </toggleGroup>
@@ -198,7 +207,7 @@
             </GridPane>
          </children>
       </Pane>
-      <MenuBar disable="true" layoutY="-6.0" prefHeight="33.0" prefWidth="1336.0" styleClass="menuTitles">
+      <MenuBar disable="true" layoutY="-6.0" prefHeight="33.0" prefWidth="1400.0" styleClass="menuTitles">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>

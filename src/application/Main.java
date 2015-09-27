@@ -15,8 +15,8 @@ import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
-	private final double MINIMUM_WINDOW_WIDTH = 1337;
-    private final double MINIMUM_WINDOW_HEIGHT = 760;
+	private final double MINIMUM_WINDOW_WIDTH = 1400;
+    private final double MINIMUM_WINDOW_HEIGHT = 850;
     private Scene scene;
     private Stage stage;
 	@Override
