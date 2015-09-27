@@ -65,9 +65,9 @@
                   <Label text="Receiver Intercept" GridPane.rowIndex="9" />
                   <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="9" />
                   <TextField fx:id="aperture" onKeyReleased="#apertureKeyReleased" promptText="0.0 - 2.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <TextField fx:id="recIntercept" editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <TextField fx:id="dirtFactor" editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <TextField fx:id="winTrans" editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField fx:id="recIntercept" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="0.95" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField fx:id="dirtFactor" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="0.95" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="winTrans" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="0.95" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                </children>
             </GridPane>
          </children></Pane>
@@ -138,11 +138,11 @@
                   <Label text="Fuel Power Density" GridPane.rowIndex="2" />
                   <Label text="Specific Heat O2" GridPane.rowIndex="3" />
                   <Label fx:id="specHeatH2" text="Specific Heat H2" GridPane.rowIndex="4" />
-                  <TextField fx:id="fuelMolarMass" editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" />
-                  <TextField fx:id="fuelSpecHeat" editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="fuelPowerDensity" editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="specHeatO2" editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="fuelMolarMass" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="172.005" GridPane.columnIndex="1" />
+                  <TextField fx:id="fuelSpecHeat" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="fuelPowerDensity" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="1500.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="specHeatO2" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="29.4" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField editable="false" focusTraversable="false" styleClass="uneditableTBs" text="28.8" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="kg/mol" GridPane.columnIndex="2" />
                   <Label text="J/molK" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Label text="kg/mol³" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -182,7 +182,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <Button layoutX="184.0" layoutY="23.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="90.0" text="Calculate" />
+            <Button layoutX="184.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#onCalculate" prefHeight="33.0" prefWidth="90.0" text="Calculate" />
          </children>
       </Pane>
       <Pane layoutX="46.0" layoutY="692.0" prefHeight="87.0" prefWidth="348.0" styleClass="subpanes">
@@ -197,7 +197,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <RadioButton mnemonicParsing="false" selected="true" text="Higher Heating Value">
+                  <RadioButton fx:id="higherHeatingRadio" mnemonicParsing="false" selected="true" text="Higher Heating Value">
                      <toggleGroup>
                         <ToggleGroup fx:id="heatRadios" />
                      </toggleGroup>
