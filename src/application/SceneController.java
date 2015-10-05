@@ -1,6 +1,12 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
@@ -14,23 +20,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class SceneController extends AnchorPane{
-	
+
 	@FXML
-	private StackedAreaChart h2Graph;
+	private LineChart h2Graph;
 	@FXML
 	private TextField solarDNI;
 	@FXML
 	private TextField conFactor;
 	@FXML
-	private TextField trans;
-	@FXML
 	private TextField emiss;
 	@FXML
 	private TextField reflectOne;
-	@FXML
-	private TextField reflectTwo;
-	@FXML
-	private TextField aperture;
 	@FXML
 	private TextField recIntercept;
 	@FXML
@@ -48,35 +48,36 @@ public class SceneController extends AnchorPane{
 	@FXML
 	private TextField solidToSolid;
 	@FXML
+	private TextField gasLess;
+	@FXML
+	private TextField gasGreat;
+	@FXML
 	private TextField reducTemp;
 	@FXML
-	private TextField oxiTemp;
+	private TextField thermalReduc;
 	@FXML
-	private Label specHeatH2;
+	private TextField oxiTempLow;
 	@FXML
-	private TextField fuelMolarMass;
+	private TextField oxiTempHigh;
 	@FXML
 	private TextField fuelSpecHeat;
-	@FXML
-	private TextField fuelPowerDensity;
-	@FXML
-	private TextField specHeatO2;
 	@FXML
 	private TextField solarToFuelEfficiency;
 	@FXML
 	private RadioButton higherHeatingRadio;
 	@FXML
 	private ToggleGroup heatRadios;
-	
+
 	private boolean[] invalidInput;
-	
+	private static final int INPUT_SIZE = 16;
+
 	public void init(){
-		h2Graph.getXAxis().setLabel("delta_T (K)");
+		h2Graph.getXAxis().setLabel("Oxidation Temp (C)");
 		h2Graph.getYAxis().setLabel("Solar Efficiency (%)");
-		
-		invalidInput = new boolean[14];
+
+		invalidInput = new boolean[INPUT_SIZE];
 		for(int x = 0; x < invalidInput.length; x++){
-			invalidInput[x] = false;
+			invalidInput[x] = true;
 		}
 	}
 
@@ -85,7 +86,7 @@ public class SceneController extends AnchorPane{
 	public void solarDNIKeyReleased(KeyEvent event) {
 		try{
 			double value = Double.parseDouble(solarDNI.getText());
-			if(value < 0 || value > 1){
+			if(value < 300 || value > 1500){
 				solarDNI.setStyle("-fx-text-fill:red;");
 				invalidInput[0] = true;
 			}else{
@@ -102,7 +103,7 @@ public class SceneController extends AnchorPane{
 	public void conFactorKeyReleased(KeyEvent event) {
 		try{
 			double value = Double.parseDouble(conFactor.getText());
-			if(value < 1800 || value > 3000){
+			if(value < 1500 || value > 3500){
 				conFactor.setStyle("-fx-text-fill:red;");
 				invalidInput[1] = true;
 			}else{
@@ -114,38 +115,21 @@ public class SceneController extends AnchorPane{
 			invalidInput[1] = true;
 		}
 	}
-	// Event Listener on TextField[#trans].onKeyReleased
-	@FXML
-	public void transKeyReleased(KeyEvent event) {
-		try{
-			double value = Double.parseDouble(trans.getText());
-			if(value < 0 || value > 1){
-				trans.setStyle("-fx-text-fill:red;");
-				invalidInput[2] = true;
-			}else{
-				trans.setStyle("-fx-text-fill:black;");
-				invalidInput[2] = false;
-			}
-		}catch(Exception e){
-			trans.setStyle("-fx-text-fill:red;");
-			invalidInput[2] = true;
-		}
-	}
 	// Event Listener on TextField[#emiss].onKeyReleased
 	@FXML
 	public void emissKeyReleased(KeyEvent event) {
 		try{
 			double value = Double.parseDouble(emiss.getText());
-			if(value < 0 || value > 1){
+			if(value < 0.7 || value > 1){
 				emiss.setStyle("-fx-text-fill:red;");
-				invalidInput[3] = true;
+				invalidInput[2] = true;
 			}else{
 				emiss.setStyle("-fx-text-fill:black;");
-				invalidInput[3] = false;
+				invalidInput[2] = false;
 			}
 		}catch(Exception e){
 			emiss.setStyle("-fx-text-fill:red;");
-			invalidInput[3] = true;
+			invalidInput[2] = true;
 		}
 	}
 	// Event Listener on TextField[#reflectOne].onKeyReleased
@@ -155,48 +139,14 @@ public class SceneController extends AnchorPane{
 			double value = Double.parseDouble(reflectOne.getText());
 			if(value < 0 || value > 1){
 				reflectOne.setStyle("-fx-text-fill:red;");
-				invalidInput[4] = true;
+				invalidInput[3] = true;
 			}else{
 				reflectOne.setStyle("-fx-text-fill:black;");
-				invalidInput[4] = false;
+				invalidInput[3] = false;
 			}
 		}catch(Exception e){
 			reflectOne.setStyle("-fx-text-fill:red;");
-			invalidInput[4] = true;
-		}
-	}
-	// Event Listener on TextField[#reflectTwo].onKeyReleased
-	@FXML
-	public void reflectTwo(KeyEvent event) {
-		try{
-			double value = Double.parseDouble(reflectTwo.getText());
-			if(value < 0 || value > 1){
-				reflectTwo.setStyle("-fx-text-fill:red;");
-				invalidInput[5] = true;
-			}else{
-				reflectTwo.setStyle("-fx-text-fill:black;");
-				invalidInput[5] = false;
-			}
-		}catch(Exception e){
-			reflectTwo.setStyle("-fx-text-fill:red;");
-			invalidInput[5] = true;
-		}
-	}
-	// Event Listener on TextField[#aperture].onKeyReleased
-	@FXML
-	public void apertureKeyReleased(KeyEvent event) {
-		try{
-			double value = Double.parseDouble(aperture.getText());
-			if(value < 0 || value > 2){
-				aperture.setStyle("-fx-text-fill:red;");
-				invalidInput[6] = true;
-			}else{
-				aperture.setStyle("-fx-text-fill:black;");
-				invalidInput[6] = false;
-			}
-		}catch(Exception e){
-			aperture.setStyle("-fx-text-fill:red;");
-			invalidInput[6] = true;
+			invalidInput[3] = true;
 		}
 	}
 	// Event Listener on TextField[#solarToElec].onKeyReleased
@@ -206,14 +156,14 @@ public class SceneController extends AnchorPane{
 			double value = Double.parseDouble(solarToElec.getText());
 			if(value < 0 || value > 1){
 				solarToElec.setStyle("-fx-text-fill:red;");
-				invalidInput[7] = true;
+				invalidInput[4] = true;
 			}else{
 				solarToElec.setStyle("-fx-text-fill:black;");
-				invalidInput[7] = false;
+				invalidInput[4] = false;
 			}
 		}catch(Exception e){
 			solarToElec.setStyle("-fx-text-fill:red;");
-			invalidInput[7] = true;
+			invalidInput[4] = true;
 		}
 	}
 	// Event Listener on TextField[#heatToElec].onKeyReleased
@@ -223,14 +173,14 @@ public class SceneController extends AnchorPane{
 			double value = Double.parseDouble(heatToElec.getText());
 			if(value < 0 || value > 1){
 				heatToElec.setStyle("-fx-text-fill:red;");
-				invalidInput[8] = true;
+				invalidInput[5] = true;
 			}else{
 				heatToElec.setStyle("-fx-text-fill:black;");
-				invalidInput[8] = false;
+				invalidInput[5] = false;
 			}
 		}catch(Exception e){
 			heatToElec.setStyle("-fx-text-fill:red;");
-			invalidInput[8] = true;
+			invalidInput[5] = true;
 		}
 	}
 	// Event Listener on TextField[#lifting].onKeyReleased
@@ -240,14 +190,14 @@ public class SceneController extends AnchorPane{
 			double value = Double.parseDouble(lifting.getText());
 			if(value < 0 || value > 1){
 				lifting.setStyle("-fx-text-fill:red;");
-				invalidInput[9] = true;
+				invalidInput[6] = true;
 			}else{
 				lifting.setStyle("-fx-text-fill:black;");
-				invalidInput[9] = false;
+				invalidInput[6] = false;
 			}
 		}catch(Exception e){
 			lifting.setStyle("-fx-text-fill:red;");
-			invalidInput[9] = true;
+			invalidInput[6] = true;
 		}
 	}
 	// Event Listener on TextField[#elecToPump].onKeyReleased
@@ -257,14 +207,14 @@ public class SceneController extends AnchorPane{
 			double value = Double.parseDouble(elecToPump.getText());
 			if(value < 0 || value > 1){
 				elecToPump.setStyle("-fx-text-fill:red;");
-				invalidInput[10] = true;
+				invalidInput[7] = true;
 			}else{
 				elecToPump.setStyle("-fx-text-fill:black;");
-				invalidInput[10] = false;
+				invalidInput[7] = false;
 			}
 		}catch(Exception e){
 			elecToPump.setStyle("-fx-text-fill:red;");
-			invalidInput[10] = true;
+			invalidInput[7] = true;
 		}
 	}
 	// Event Listener on TextField[#solidToSolid].onKeyReleased
@@ -274,48 +224,136 @@ public class SceneController extends AnchorPane{
 			double value = Double.parseDouble(solidToSolid.getText());
 			if(value < 0 || value > 1){
 				solidToSolid.setStyle("-fx-text-fill:red;");
-				invalidInput[11] = true;
+				invalidInput[8] = true;
 			}else{
 				solidToSolid.setStyle("-fx-text-fill:black;");
-				invalidInput[11] = false;
+				invalidInput[8] = false;
 			}
 		}catch(Exception e){
 			solidToSolid.setStyle("-fx-text-fill:red;");
-			invalidInput[11] = true;
+			invalidInput[8] = true;
 		}
 	}
+
+	// Event Listener on TextField[#gasLess].onKeyReleased
+	@FXML
+	public void gasLessKeyReleased(KeyEvent event) {
+		try{
+			double value = Double.parseDouble(gasLess.getText());
+			if(value < 0 || value > 1){
+				gasLess.setStyle("-fx-text-fill:red;");
+				invalidInput[9] = true;
+			}else{
+				gasLess.setStyle("-fx-text-fill:black;");
+				invalidInput[9] = false;
+			}
+		}catch(Exception e){
+			gasLess.setStyle("-fx-text-fill:red;");
+			invalidInput[9] = true;
+		}
+	}
+	// Event Listener on TextField[#gasGreat].onKeyReleased
+	@FXML
+	public void gasGreatKeyReleased(KeyEvent event) {
+		try{
+			double value = Double.parseDouble(gasGreat.getText());
+			if(value < 0 || value > 1){
+				gasGreat.setStyle("-fx-text-fill:red;");
+				invalidInput[10] = true;
+			}else{
+				gasGreat.setStyle("-fx-text-fill:black;");
+				invalidInput[10] = false;
+			}
+		}catch(Exception e){
+			gasGreat.setStyle("-fx-text-fill:red;");
+			invalidInput[10] = true;
+		}
+	}
+
 	// Event Listener on TextField[#reducTemp].onKeyReleased
 	@FXML
 	public void reducTempKeyReleased(KeyEvent event) {
 		try{
 			double value = Double.parseDouble(reducTemp.getText());
-			if(value < 1673 || value > 1873){
+			if(value < 1300 || value > 1600){
 				reducTemp.setStyle("-fx-text-fill:red;");
-				invalidInput[12] = true;
+				invalidInput[11] = true;
 			}else{
 				reducTemp.setStyle("-fx-text-fill:black;");
-				invalidInput[12] = false;
+				invalidInput[11] = false;
 			}
 		}catch(Exception e){
 			reducTemp.setStyle("-fx-text-fill:red;");
+			invalidInput[11] = true;
+		}
+	}
+
+	// Event Listener on TextField[#thermalReduc].onKeyReleased
+	@FXML
+	public void thermalReducKeyReleased(KeyEvent event) {
+		try{
+			double value = Double.parseDouble(thermalReduc.getText());
+			if(value < 1 || value > 1000){
+				thermalReduc.setStyle("-fx-text-fill:red;");
+				invalidInput[12] = true;
+			}else{
+				thermalReduc.setStyle("-fx-text-fill:black;");
+				invalidInput[12] = false;
+			}
+		}catch(Exception e){
+			thermalReduc.setStyle("-fx-text-fill:red;");
 			invalidInput[12] = true;
 		}
 	}
-	// Event Listener on TextField[#oxiTemp].onKeyReleased
+	// Event Listener on TextField[#oxiTempLow].onKeyReleased
 	@FXML
-	public void oxiTempKeyReleased(KeyEvent event) {
+	public void oxiTempLowKeyReleased(KeyEvent event) {
 		try{
-			double value = Double.parseDouble(oxiTemp.getText());
+			double value = Double.parseDouble(oxiTempLow.getText());
 			if(value < 873 || value > 1673){
-				oxiTemp.setStyle("-fx-text-fill:red;");
+				oxiTempLow.setStyle("-fx-text-fill:red;");
 				invalidInput[13] = true;
 			}else{
-				oxiTemp.setStyle("-fx-text-fill:black;");
+				oxiTempLow.setStyle("-fx-text-fill:black;");
 				invalidInput[13] = false;
 			}
 		}catch(Exception e){
-			oxiTemp.setStyle("-fx-text-fill:red;");
+			oxiTempLow.setStyle("-fx-text-fill:red;");
 			invalidInput[13] = true;
+		}
+	}
+	// Event Listener on TextField[#oxiTempHigh].onKeyReleased
+	@FXML
+	public void oxiTempHighKeyReleased(KeyEvent event) {
+		try{
+			double value = Double.parseDouble(oxiTempHigh.getText());
+			if(value < 873 || value > 1673){
+				oxiTempHigh.setStyle("-fx-text-fill:red;");
+				invalidInput[14] = true;
+			}else{
+				oxiTempHigh.setStyle("-fx-text-fill:black;");
+				invalidInput[14] = false;
+			}
+		}catch(Exception e){
+			oxiTempHigh.setStyle("-fx-text-fill:red;");
+			invalidInput[14] = true;
+		}
+	}
+	// Event Listener on TextField[#fuelSpecHeat].onKeyReleased
+	@FXML
+	public void fuelSpecHeatKeyReleased(KeyEvent event) {
+		try{
+			double value = Double.parseDouble(fuelSpecHeat.getText());
+			if(value < 0 || value > 200){
+				fuelSpecHeat.setStyle("-fx-text-fill:red;");
+				invalidInput[15] = true;
+			}else{
+				fuelSpecHeat.setStyle("-fx-text-fill:black;");
+				invalidInput[15] = false;
+			}
+		}catch(Exception e){
+			fuelSpecHeat.setStyle("-fx-text-fill:red;");
+			invalidInput[15] = true;
 		}
 	}
 	// Event Listener on Button.onMouseClicked
@@ -324,16 +362,68 @@ public class SceneController extends AnchorPane{
 		boolean calc = true;
 		for(int x = 0; x < invalidInput.length; x++){
 			if(invalidInput[x]){
+				System.out.println(x);
 				showInvalidInputDialog("Please replace red text with valid input.");
 				calc = false;
 				break;
 			}
 		}
 		if (calc){
-			// TODO: run calculations
+			String[] values = new String[INPUT_SIZE + 1];
+			values[0] = solarDNI.getText();
+			values[1] = conFactor.getText();
+			values[2] = emiss.getText();
+			values[3] = reflectOne.getText();
+			values[4] = solarToElec.getText();
+			values[5] = heatToElec.getText();
+			values[6] = lifting.getText();
+			values[7] = elecToPump.getText();
+			values[8] = solidToSolid.getText();
+			values[9] = gasLess.getText();
+			values[10] = gasGreat.getText();
+			values[11] = reducTemp.getText();
+			values[12] = thermalReduc.getText();
+			values[13] = oxiTempLow.getText();
+			values[14] = oxiTempHigh.getText();
+			values[15] = fuelSpecHeat.getText();
+			if(higherHeatingRadio.isSelected()){
+				values[16] = "1";
+			}else{
+				values[16] = "0";
+			}
+			
+			HydrogenProxy proxy = new HydrogenProxy();
+			String filename = proxy.calculate(values);
+			File file = new File(filename);
+			ArrayList<String> input = new ArrayList<String>();
+			XYChart.Series series = new XYChart.Series();
+	        series.setName("efficiency");
+			try{
+				BufferedReader fr = new BufferedReader(new FileReader(file));
+				
+				String str;
+				while((str=fr.readLine())!=null){
+					input.add(str);
+				}
+				double oxiLow = Double.parseDouble(oxiTempLow.getText().toString());
+
+				for (int x = 0; x < input.size()-1; x++){
+					System.out.println(x+oxiLow + " and " + input.get(x));
+					series.getData().add(new XYChart.Data(Double.toString(x+oxiLow), Double.parseDouble(input.get(x))));
+				}
+				h2Graph.getData().removeAll(h2Graph.getData());
+				h2Graph.getData().add(series);
+				h2Graph.setCreateSymbols(false);
+				h2Graph.setLegendVisible(false);
+				fr.close();
+				solarToFuelEfficiency.setText(input.get(input.size()-1));
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
 		}
 	}
-	
+
 	private void showInvalidInputDialog(String msg){
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Invalid Input");
@@ -341,6 +431,4 @@ public class SceneController extends AnchorPane{
 		alert.setContentText(msg);
 		alert.show();
 	}
-	
-
 }

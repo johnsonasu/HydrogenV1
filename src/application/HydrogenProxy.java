@@ -10,6 +10,11 @@ public class HydrogenProxy {
 	}
 	
 	HydrogenProxy(){
+		
+	}
+	
+	public String calculate(String[] values){
+		return initInterface(values);
 	}
 	
 	private native String initInterface(String[] values);

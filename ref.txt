@@ -1,0 +1,1 @@
+g++ -m64 -std=c++11 -Wl,--add-stdcall-alias -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o hp64.dll application_HydrogenProxy.cpp

@@ -9,12 +9,6 @@
 
 #include <iostream>
 #include <fstream>
-#include <cmath>
-#include <string>
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <ctime>
 
 #ifndef SOLARHYDROGEN_H
 #define	SOLARHYDROGEN_H
@@ -34,36 +28,28 @@ public:
 	SolarHydrogenInput() {
 		// set by user (includes setters and getters)
 		m_solarDNI = 0;
-		m_concfactor = 0;
+		m_transmissivity = 0;
 		m_reductionTemp = 0;
 		m_oxidationTemp = 0;
 		m_emissivity = 0;
 		m_reflectivity1 = 0;
-		m_themredpressure = 0;
+		m_reflectivity2 = 0;
 		m_effSolarElec = 0;
 		m_effHeatElec = 0;
-		m_effElecPump = 0;
-		m_effLifting = 0;
-		m_specHeatFuel=0;
-		m_oxidationTemp2=0;
-		m_solidRecup=0;
-		m_steamEff1000=0;
-		m_steamEff1001=0;
-		m_heatingvalue=0;
-		
+		m_latentHeat = 0;
+		m_concentrationFactor = 0;
+
 		// hard coded -- shown to user (includes getters)
 		m_dirtFactor = 0.95;
 		m_windowTransmission = 0.95;
 		m_intercept = 0.95;
 		m_molarMassFuel = 172.005;
 		m_fuelPowerDensity = 1500.0;
+		m_specHeatFuel = 80.0;
 		m_specHeatO2 = 29.4;
 		m_specHeatH2 = 28.8;
-		m_specHeatSteam = 37.47;
 
 		// hard coded -- not showed to user (does not include setters or getters)
-		m_elevatorHeight = 75.0;
-		m_reflectivity2 = 1;
 		m_gravity = 9.81;
 		m_H2Concentration = 0.05051;
 		m_molarMassWater = 18.015;
@@ -78,8 +64,11 @@ public:
 		m_evapHeatH2O = 40650.0;
 		m_H2LHV = 241807.0;
 		m_H2HHV = 285830.0;
-		m_deltaTR = 0;
+		m_steamEff1001 = 0.5;
+		m_steamEff1000 = 0.95;
 		m_pressureRecup = 202650.0;
+		m_elevatorHeight = 15.0;
+		m_elevatorEff = 0.25;
 		m_workPumpIsen = 0.25;
 		m_curveFitA0 = -12.00607246;
 		m_curveFitA1 = 0.008977086;
@@ -120,8 +109,6 @@ public:
 		m_td2H2OK6 = -3.1526311494e-17;
 		m_td2H2OK7 = 6.3053883700e-21;
 		m_td2H2OK8 = -5.5223956624e-25;
-		m_LHRp=0;
-		m_temp=0;
 	}
 	/**
 	* Gets copy of input data.
@@ -130,29 +117,22 @@ public:
 	inline SolarHydrogenInput GetSolarHydrogenInput() {
 		SolarHydrogenInput myCopy;
 		myCopy.m_solarDNI = m_solarDNI;
-		myCopy.m_concfactor = m_concfactor;
+		myCopy.m_transmissivity = m_transmissivity;
 		myCopy.m_reductionTemp = m_reductionTemp;
 		myCopy.m_oxidationTemp = m_oxidationTemp;
 		myCopy.m_emissivity = m_emissivity;
-		myCopy.m_oxidationTemp2=m_oxidationTemp2;
-		myCopy.m_solidRecup=m_solidRecup;
 		myCopy.m_reflectivity1 = m_reflectivity1;
-		myCopy.m_themredpressure = m_themredpressure;
+		myCopy.m_reflectivity2 = m_reflectivity2;
 		myCopy.m_effSolarElec = m_effSolarElec;
 		myCopy.m_effHeatElec = m_effHeatElec;
-		myCopy.m_effLifting = m_effLifting;
-		myCopy.m_steamEff1000=m_steamEff1000;
-		myCopy.m_steamEff1001=m_steamEff1001;
-		myCopy.m_heatingvalue=m_heatingvalue;
-		myCopy.m_LHRp = m_LHRp;
-		myCopy.m_specHeatFuel = m_specHeatFuel;
 		myCopy.m_latentHeat = m_latentHeat;
-		myCopy.m_apertureArea = m_apertureArea;
+		myCopy.m_concentrationFactor = m_concentrationFactor;
 		myCopy.m_dirtFactor = m_dirtFactor;
 		myCopy.m_windowTransmission = m_windowTransmission;
 		myCopy.m_intercept = m_intercept;
 		myCopy.m_molarMassFuel = m_molarMassFuel;
 		myCopy.m_fuelPowerDensity = m_fuelPowerDensity;
+		myCopy.m_specHeatFuel = m_specHeatFuel;
 		myCopy.m_specHeatO2 = m_specHeatO2;
 		myCopy.m_specHeatH2 = m_specHeatH2;
 		myCopy.m_gravity = m_gravity;
@@ -172,8 +152,9 @@ public:
 		myCopy.m_steamEff1001 = m_steamEff1001;
 		myCopy.m_steamEff1000 = m_steamEff1000;
 		myCopy.m_pressureRecup = m_pressureRecup;
-		myCopy.m_LHRp = m_LHRp;
+		myCopy.m_elevatorHeight = m_elevatorHeight;
 		myCopy.m_specHeatFuel = m_specHeatFuel;
+		myCopy.m_elevatorEff = m_elevatorEff;
 		myCopy.m_workPumpIsen = m_workPumpIsen;
 		myCopy.m_curveFitA0 = m_curveFitA0;
 		myCopy.m_curveFitA1 = m_curveFitA1;
@@ -221,25 +202,16 @@ public:
 	*/
 	inline void SetSolarHydrogenInput(SolarHydrogenInput &data) {
 		m_solarDNI = data.m_solarDNI;
-		m_concfactor = data.m_concfactor;
+		m_transmissivity = data.m_transmissivity;
 		m_reductionTemp = data.m_reductionTemp;
 		m_oxidationTemp = data.m_oxidationTemp;
-		m_oxidationTemp2=data.m_oxidationTemp2;
 		m_emissivity = data.m_emissivity;
 		m_reflectivity1 = data.m_reflectivity1;
-		m_themredpressure = data.m_themredpressure;
-		m_solidRecup=data.m_solidRecup;
+		m_reflectivity2 = data.m_reflectivity2;
 		m_effSolarElec = data.m_effSolarElec;
 		m_effHeatElec = data.m_effHeatElec;
-		m_effElecPump = data.m_effElecPump;
-		m_effLifting = data.m_effLifting;
-		m_steamEff1000=data.m_steamEff1000;
-		m_steamEff1001=data.m_steamEff1001;
-		m_heatingvalue=data.m_heatingvalue;
-		m_LHRp = data.m_LHRp;
-		m_specHeatFuel = data.m_specHeatFuel;
 		m_latentHeat = data.m_latentHeat;
-		m_apertureArea = data.m_apertureArea;
+		m_concentrationFactor = data.m_concentrationFactor;
 		m_dirtFactor = data.m_dirtFactor;
 		m_windowTransmission = data.m_windowTransmission;
 		m_intercept = data.m_intercept;
@@ -248,7 +220,6 @@ public:
 		m_specHeatFuel = data.m_specHeatFuel;
 		m_specHeatO2 = data.m_specHeatO2;
 		m_specHeatH2 = data.m_specHeatH2;
-		m_specHeatSteam = data.m_specHeatSteam;
 		m_gravity = data.m_gravity;
 		m_H2Concentration = data.m_H2Concentration;
 		m_molarMassWater = data.m_molarMassWater;
@@ -263,10 +234,11 @@ public:
 		m_evapHeatH2O = data.m_evapHeatH2O;
 		m_H2LHV = data.m_H2LHV;
 		m_H2HHV = data.m_H2HHV;
-		m_deltaTR = data.m_deltaTR;
 		m_steamEff1001 = data.m_steamEff1001;
 		m_steamEff1000 = data.m_steamEff1000;
 		m_pressureRecup = data.m_pressureRecup;
+		m_elevatorHeight = data.m_elevatorHeight;
+		m_elevatorEff = data.m_elevatorEff;
 		m_workPumpIsen = data.m_workPumpIsen;
 		m_curveFitA0 = data.m_curveFitA0;
 		m_curveFitA1 = data.m_curveFitA1;
@@ -310,8 +282,8 @@ public:
 
 	/** Setters and getters */
 	inline bool SetSolarDNI(double solarDNI) {
-		if (solarDNI <300 || solarDNI > 1500.0) {
-			std::cout << "DNI data is outside allowable bounds: 300 < DNI < 1500.\n";
+		if (solarDNI < 0.0 || solarDNI > 1500.0) {
+			std::cout << "DNI data is outside allowable bounds: 0 < DNI < 1500.\n";
 			return(false);
 		}
 		else {
@@ -322,25 +294,22 @@ public:
 	inline double GetSolarDNI() {
 		return(m_solarDNI);
 	}
-
-	/** Setters and getters */
-	inline bool SetConcentrationFactor(double concentrationFactor) {
-		if (concentrationFactor <1500 || concentrationFactor > 3500) {
-			std::cout << "ConcFact data is outside allowable bounds: 300 < DNI < 1500.\n";
+	inline bool SetTransmissivity(double transmissivity) {
+		if (transmissivity < 0.0 || transmissivity > 1.0) {
+			std::cout << "Transmissivity data is outside allowable bounds: 0 < transmissivity < 1.\n";
 			return(false);
 		}
 		else {
-			m_concfactor = concentrationFactor;
+			m_transmissivity = transmissivity;
 			return(true);
 		}
 	}
-	inline double GetConcentrationFactor() {
-		return(m_concfactor);
+	inline double GetTransmissivity() {
+		return(m_transmissivity);
 	}
-	
 	inline bool SetReductionTemp(double reductionTemp) {
-		if (reductionTemp < 1300.0 || reductionTemp > 1600.0) {
-			std::cout << "Reduction Temperature value is outside allowable bounds: 1300 < reductionTemp < 1600.\n";
+		if (reductionTemp < 1673.0 || reductionTemp > 1873.0) {
+			std::cout << "Reduction Temperature value is outside allowable bounds: 1673 < reductionTemp < 1873.\n";
 			return(false);
 		}
 		else {
@@ -352,8 +321,8 @@ public:
 		return(m_reductionTemp);
 	}
 	inline bool SetOxidationTemp(double oxidationTemp) {
-		if (oxidationTemp < 873 || oxidationTemp > 1673) {
-			std::cout << "Oxidation Temperature value is outside allowable bounds: 673 < OxidationTemp < 173.\n";
+		if (oxidationTemp < 873.0 || oxidationTemp > 1673.0) {
+			std::cout << "Oxidation Temperature value is outside allowable bounds: 873 < OxidationTemp < 1673.\n";
 			return(false);
 		}
 		else {
@@ -365,8 +334,8 @@ public:
 		return(m_oxidationTemp);
 	}
 	inline bool SetEmissivity(double emissivity) {
-		if (emissivity < 0.7 || emissivity > 1.0) {
-			std::cout << "Emissivity is outside allowable bounds: 0.7 < emissivity < 1.\n";
+		if (emissivity < 0.0 || emissivity > 1.0) {
+			std::cout << "Emissivity is outside allowable bounds: 0 < emissivity < 1.\n";
 			return(false);
 		}
 		else {
@@ -390,18 +359,18 @@ public:
 	inline double GetReflectivity1() {
 		return(m_reflectivity1);
 	}
-	inline bool Setthemredpressure(double themredpressure) {
-		if (themredpressure < 1.0 || themredpressure > 1000) {
-			std::cout << "themredpressure is outside allowable bounds: 1 < themredpressure < 1000.\n";
+	inline bool SetReflectivity2(double reflectivity2) {
+		if (reflectivity2 < 0.0 || reflectivity2 > 1.0) {
+			std::cout << "Reflectivity2 is outside allowable bounds: 0 < reflectivity2 < 1.\n";
 			return(false);
 		}
 		else {
-			m_themredpressure = themredpressure;
+			m_reflectivity2 = reflectivity2;
 			return(true);
 		}
 	}
-	inline double Getthemredpressure() {
-		return(m_themredpressure);
+	inline double GetReflectivity2() {
+		return(m_reflectivity2);
 	}
 	inline bool SetEffSolarElec(double effSolarElec) {
 		if (effSolarElec < 0.0 || effSolarElec > 1.0) {
@@ -429,157 +398,71 @@ public:
 	inline double GetEffHeatElec() {
 		return(m_effHeatElec);
 	}
-	inline bool SetEffElecPump(double effElecPump) {
-		if (effElecPump < 0.0 || effElecPump > 1.0) {
-			std::cout << "Electricity to Pumping efficiency is outside allowable bounds: 0 < effElecPump < 1.\n";
+	inline bool SetLatentHeat(int latentHeat) {
+		if (latentHeat == 0.0 || latentHeat == 1.0) {
+			std::cout << "Latent heat inclusion is outside allowable bounds: 0 == latentHeat || latentHeat == 1.\n";
 			return(false);
 		}
 		else {
-			m_effElecPump = effElecPump;
+			m_latentHeat = latentHeat;
 			return(true);
 		}
 	}
-	inline double GetEffElecPump() {
-		return(m_effElecPump);
+	inline double GetLatentHeat() {
+		return(m_latentHeat);
 	}
-	inline bool SetEffLifting(double effLifting) {
-		if (effLifting < 0.0 || effLifting > 1.0) {
-			std::cout << "Particle lifting efficiency is outside allowable bounds: 0 < effLifting < 1.\n";
+	inline bool SetConcentrationFactor(double concentrationFactor) {
+		if (concentrationFactor > 1800.0 || concentrationFactor < 3000.0) {
+			std::cout << "Concentration factor is outside allowable bounds: 1800 < concentrationFactor < 3000.\n";
 			return(false);
 		}
 		else {
-			m_effLifting = effLifting;
+			m_concentrationFactor = concentrationFactor;
 			return(true);
 		}
 	}
-	inline double GetEffLifting() {
-		return(m_effLifting);
+	inline double GetConcentrationFactor() {
+		return(m_concentrationFactor);
 	}
-	inline bool SetsolidRecup(double solidRecup) {
-		if (solidRecup < 0.0 || solidRecup > 1.0) {
-			std::cout << "Particle soild solid recupperator efficiency is outside  the limits: 0 < effLifting < 30.\n";
-			return(false);
-		}
-		else {
-			m_solidRecup = solidRecup;
-			return(true);
-		}
+	inline double GetDirtFactor() {
+		return(m_dirtFactor);
 	}
-	inline double GetsolidRecup() {
-		return(m_solidRecup);
+	inline double GetWindowTransmission() {
+		return(m_windowTransmission);
 	}
-	inline bool SetspecHeatFuel(double specHeatFuel) {
-		if (specHeatFuel < 0 || specHeatFuel > 200) {
-			std::cout << "Specific heat of oxide is  outside allowable bounds: 0 < specHeatFuel < 200.\n";
-			return(false);
-		}
-		else {
-			m_specHeatFuel = specHeatFuel;
-			return(true);
-		}
+	inline double GetIntercept() {
+		return(m_intercept);
 	}
-	inline double GetspecHeatFuel() {
+	inline double GetMolarMassFuel() {
+		return(m_molarMassFuel);
+	}
+	inline double GetFuelPowerDensity() {
+		return(m_fuelPowerDensity);
+	}
+	inline double GetSpecHeatFuel() {
 		return(m_specHeatFuel);
 	}
-	inline bool Setheatingvalue(int heatingvalue) {
-		if (heatingvalue < 0.0 || heatingvalue > 1.0) {
-			std::cout << "Latent heat inclusion is outside allowable bounds: 0 == heatingvalue || heatingvalue == 1.\n";
-			return(false);
-		}
-		else {
-			m_heatingvalue = heatingvalue;
-			return(true);
-		}
+	inline double GetSpecHeatO2() {
+		return(m_specHeatO2);
 	}
-	inline double Getheatingvalue() {
-		return(m_heatingvalue);
+	inline double GetSpecHeatH2() {
+		return(m_specHeatH2);
 	}
-	inline bool SetoxidationTemp2(double oxidationTemp2) {
-		if (oxidationTemp2 < 873 || oxidationTemp2 > 1673) {
-			std::cout << " upper bound of oxidation temp is outside allowable bounds: 600 < Aperture area < 1473\n";
-			return(false);
-		}
-		else {
-			m_oxidationTemp2 = oxidationTemp2;
-			return(true);
-		}
-	}
-	inline double GetoxidationTemp2() {
-		return(m_oxidationTemp2);
-	}
-	inline bool SetsteamEff1000(double steamEff1000) {
-		if (steamEff1000 < 0 || steamEff1000 > 1.0) {
-			std::cout << "gas-gas heat exchanger efficiency below 1000C is outside allowable bounds: 0 < steamEff1000 < 1.\n";
-			return(false);
-		}
-		else {
-			m_steamEff1000 = steamEff1000;
-			return(true);
-		}
-	}
-	inline double GetsteamEff1000() {
-		return(m_steamEff1000);
-
-	}
-	inline bool SetsteamEff1001(double steamEff1001) {
-		if (steamEff1001 < 0 || steamEff1001 > 1.0) {
-			std::cout << "gas-gas heat exchanger efficiency above 1000C  is outside allowable bounds: 0 < steamEff1001 < 1.\n";
-			return(false);
-		}
-		else {
-			m_steamEff1001 = steamEff1001;
-			return(true);
-		}
-	}
-	inline double GetsteamEff1001() {
-		return(m_steamEff1001);
-	}
-//	inline double GetDirtFactor() {
-//		return(m_dirtFactor);
-//	}
-//	inline double GetWindowTransmission() {
-//		return(m_windowTransmission);
-//	}
-//	inline double GetIntercept() {
-//		return(m_intercept);
-//	}
-//	inline double GetMolarMassFuel() {
-//		return(m_molarMassFuel);
-//	}
-//	inline double GetFuelPowerDensity() {
-//		return(m_fuelPowerDensity);
-//	}
-//	inline double GetSpecHeatFuel() {
-//		return(m_specHeatFuel);
-//	}
-//	inline double GetSpecHeatO2() {
-//		return(m_specHeatO2);
-//	}
-//	inline double GetSpecHeatH2() {
-//		return(m_specHeatH2);
-//	}
 
 
-protected:
+private:
 	double m_solarDNI; /**< Solar DNI (Direct Normal Irradiance) [W/m2]. */
-	double m_concfactor; /**< Transmissivity of dirt on the receiver window [-]. */
+	double m_transmissivity; /**< Transmissivity of dirt on the receiver window [-]. */
 	double m_reductionTemp; /**< Reduction temperature [K]. */
 	double m_oxidationTemp; /**< Oxidation temperature [K]. */
-	double m_oxidationTemp2; /** oxidation temperature upper bound */
 	double m_emissivity; /**< Reflector re-radiation emissivity [-]. */
 	double m_reflectivity1; /**< Primary mirror reflectivity [-]. */
 	double m_reflectivity2; /**< Secondary mirror reflectivity [-]. */
-	double m_themredpressure; /**< Secondary mirror reflectivity [-]. */
-	double m_elevatorHeight; /**< Total elevator height [m]. */
 	double m_effSolarElec; /**< Solar flux to electricity efficiency [%]. */
 	double m_effHeatElec; /**< Heat energy to electricity efficiency [%]. */
-	double m_effElecPump; /**< Electricity to pumping efficiency [%]. */
-	double m_effLifting; /**< Particle lifiting efficiency [%]. */
-	double m_LHRp; /**< Total elevator height [m]. */
-	double m_solidRecup; /** < Effectiveness of solid-solid recuperator [-]. */
-	double m_apertureArea; /**< Aperture area [m2]. */
-	double m_dirtFactor; /**< Dirt factor [-]. */
 	int m_latentHeat; /**< Latent heat inclusion in code (binary value, 1=yes, 0=no)[-]. */
+	double m_concentrationFactor; /**< Solar concentration factor [-]. */
+	double m_dirtFactor; /**< Dirt factor [-]. */
 	double m_windowTransmission; /**< Window transmission [-]. */
 	double m_intercept; /**< Receiver intercept [-]. */
 	double m_molarMassFuel; /**< Molar mass of metal-oxide [g mol-1]. */
@@ -587,9 +470,6 @@ protected:
 	double m_specHeatFuel; /**< Specific heat of metal-oxide, approximated as 15 R for ABO3 [J mol-1 K-1]. */
 	double m_specHeatO2; /** < Specific heat of O2 [J mol-1 K-1]. */
 	double m_specHeatH2; /** < Specific heat of H2 [J mol-1 K-1]. */
-	double m_specHeatSteam;  /**< Specific heat of steam [J mol-1 K-1]. */
-	double m_heatingvalue;
-	double m_temp;
 	double m_gravity; /**< Gravity [m/s2]. */
 	double m_H2Concentration; /**< Hydrogen concentration exiting the FP reactor [-]. */
 	double m_molarMassWater; /**< Molar mass of water [g mol-1]. */
@@ -604,10 +484,11 @@ protected:
 	double m_evapHeatH2O; /**< Evaporation heat of H2O[J mol-1]. */
 	double m_H2LHV; /**< H2 Lower Heating Value [J mol-1]. */
 	double m_H2HHV; /**< H2 Higher Heating Value [J mol-1]. */
-	double m_deltaTR; /**< Extent of reduction [-]. */
 	double m_steamEff1001; /**< Steam Hrxn > 1000 C efficiency [%]. */
 	double m_steamEff1000; /**< Steam Hrxn < 1000 C efficiency [%]. */
 	double m_pressureRecup; /**< Pressure of recuperator [Pa]. */
+	double m_elevatorHeight; /**< Total elevator height [m]. */
+	double m_elevatorEff; /**< Elevator efficiency [%]. */
 	double m_workPumpIsen; /**< Isentropic pump work [ J]. */
 	double m_curveFitA0; /** < Fit for Fit coefficient (Parameters O2) [-]. */
 	double m_curveFitA1; /** < Fit for Fit coefficient (Parameters O3) [-]. */
@@ -690,7 +571,7 @@ public:
 		return(m_solarToFuelEfficiency);
 	}
 
-protected:
+private:
 	double m_solarToFuelEfficiency; /**< Solar to fuel efficiency [%]. */
 };
 
@@ -721,13 +602,9 @@ public:
 		m_incidentPowerTotal = 0;
 		m_tempStep = 0;
 		m_tempFuelProd = 0;
-		m_logPressureO2 = 0;
-		m_partialPressureO2 = 0;
 		m_polyFit1 = 0;
 		m_polyFit2 = 0;
 		m_polyFit3 = 0;
-		m_deltaOx = 0;
-		m_deltaDelta = 0;
 		m_enthalpyRedO2 = 0;
 		m_enthalpyRedDelta = 0;
 		m_enthalpyRedAvg = 0;
@@ -753,20 +630,11 @@ public:
 		m_molH2Output = 0;
 		m_wattH2Output = 0;
 		m_reactorEffOut = 0;
-		m_solartoFuelEff = 0;
+		m_solarEffOut = 0;
 		m_thermalEffOut = 0;
-		m_specHeatH2O= 75.32;
-		m_qO2= 21683;
-		m_pressureAtmatm=2;
-		m_tempVapor=383;
-		m_numberhelio=0.63;
-		m_H2HV=0;
-		m_fitcoef1= -1.296631;
-		m_fitcoef2= -0.215048;
-		m_fitcoef3= 0.004777;
 	}
 
-protected:
+private:
 	double m_enthalpyReduction; /**< Reduction enthalpy per mol O2 [g mol-1]. */
 	double m_areaAper; /**< Receiver aperture area [m2]. */
 	double m_solarFieldEff; /**< Solar field efficiency [%]. */
@@ -781,13 +649,9 @@ protected:
 	double m_incidentPowerTotal; /**< Total net flux into the reactor [W]. */
 	double m_tempStep; /**< Temperature steps [K]. */
 	double m_tempFuelProd; /**< Fuel production temperature [K]. */
-	double m_logPressureO2; /** < Log pressure of the fuel chamber with O2 [-]. */
-	double m_partialPressureO2; /**< Partial pressure of O2 [-]. */
 	double m_polyFit1; /**< Polynomial fit to Log[pO2/p0] and temperature [-]. */
 	double m_polyFit2; /**< Polynomial fit to Log[pO2/p0] and temperature [-]. */
 	double m_polyFit3; /**< Polynomial fit to Log[pO2/p0] and temperature [-]. */
-	double m_deltaOx; /**< Extent of the oxidation reaction [-]. */
-	double m_deltaDelta; /**< Extent of the redox reaction (inclusive of reduction + oxidation) [-]. */
 	double m_enthalpyRedO2; /**< Reduction enthalpy TO given delta, per mol O2 [J mol-1]. */
 	double m_enthalpyRedDelta; /**< Integrated reduction enthalpy TO given delta, per mol H2 (or mol O) [J mol-1]. */
 	double m_enthalpyRedAvg; /**< Average reduction enthalpy [J mol-1]. */
@@ -813,19 +677,8 @@ protected:
 	double m_molH2Output; /**< Thermochemical H2 output in mol/s [mol s-1]. */
 	double m_wattH2Output; /**< Thermochemical H2 output in W [W]. */
 	double m_reactorEffOut; /**< Thermal efficiency=H2 output/heat available after collection losses [%]. */
-	double m_solartoFuelEff; /**< Solar efficiency=H2 output/primary solar power [%]. */
+	double m_solarEffOut; /**< Solar efficiency=H2 output/primary solar power [%]. */
 	double m_thermalEffOut; /**< Thermal efficieny: all the heat in the reactor, how much gets converted to H2 [%]. */
-	double m_numberhelio;
-	double m_specHeatH2O;
-	double m_qPump;
-	double m_qO2;
-	double m_oxidationTempC;
-	double m_pressureAtmatm;
-	double m_tempVapor;
-	double m_H2HV;
-	double m_fitcoef1;
-	double m_fitcoef2;
-	double m_fitcoef3;
 };
 
 class SolarHydrogen : public SolarHydrogenInput, public SolarHydrogenOutput, public SolarHydrogenIntermediate {
@@ -839,11 +692,12 @@ class SolarHydrogen : public SolarHydrogenInput, public SolarHydrogenOutput, pub
 
 public:
 	SolarHydrogen();
-	const char* RunComputation();
+	bool RunComputation();
 
-protected:
-	bool VerifyOutputData();
+private:
+	bool VerifyData();
 	// TODO -- function calls to any sub-computations
+
 };
 
 
