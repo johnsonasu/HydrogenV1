@@ -1,1 +1,3 @@
-g++ -m64 -std=c++11 -Wl,--add-stdcall-alias -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o hp64.dll application_HydrogenProxy.cpp
+g++ -m64 -std=c++11 -Wl,--add-stdcall-alias -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o hp64.dll application_HydrogenProxy.cpp SolarHydrogen.cpp
+
+g++ -m32 -std=c++11 -Wl,--add-stdcall-alias -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o hp.dll application_HydrogenProxy.cpp SolarHydrogen.cpp
