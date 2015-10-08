@@ -24,11 +24,11 @@ SolarHydrogen::SolarHydrogen() {
 const char* SolarHydrogen::RunComputation() {
 	VerifyOutputData();
 
-	if (m_heatingvalue = 1)
+	if (m_heatingvalue == 1)
 	{
 		m_H2HV = m_H2HHV;
 	}
-	else if (m_heatingvalue = 0)
+	else if (m_heatingvalue == 0)
 		m_H2HV = m_H2LHV;
 
 
