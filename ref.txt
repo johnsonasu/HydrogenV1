@@ -1,6 +1,6 @@
-g++ -m64 -std=c++11 -static -static-libgcc -static-libstdc++ -Wl,--add-stdcall-alias -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o hp64.dll application_HydrogenProxy.cpp SolarHydrogen.cpp
+g++ -m64 -std=c++14 -static -static-libgcc -static-libstdc++ -Wl,--add-stdcall-alias -latomic -lgfortran -lgomp -lobjc -lquadmath -lssp -lvtv -lwinpthread -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o hp64.dll application_HydrogenProxy.cpp SolarHydrogen.cpp
 
-g++ -m32 -std=c++11 -static -static-libgcc -static-libstdc++ -Wl,--add-stdcall-alias -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o hp.dll application_HydrogenProxy.cpp SolarHydrogen.cpp
+g++ -m32 -std=c++14 -static -static-libgcc -static-libstdc++ -Wl,--add-stdcall-alias -latomic -lgfortran -lgomp -lobjc -lquadmath -lssp -lvtv -lwinpthread -I"%JAVA_HOME%\include" -I"%JAVA_HOME%\include\win32" -shared -o hp.dll application_HydrogenProxy.cpp SolarHydrogen.cpp
 
 des:
 E:\Program Files\mingw-w64\x86_64-5.2.0-posix-seh-rt_v4-rev0\mingw64\bin

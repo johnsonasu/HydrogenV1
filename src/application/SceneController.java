@@ -391,7 +391,7 @@ public class SceneController extends AnchorPane{
 			}else{
 				values[16] = "0";
 			}
-			
+
 			HydrogenProxy proxy = new HydrogenProxy();
 			String filename = proxy.calculate(values);
 			File file = new File(filename);
@@ -400,7 +400,7 @@ public class SceneController extends AnchorPane{
 	        series.setName("efficiency");
 			try{
 				BufferedReader fr = new BufferedReader(new FileReader(file));
-				
+
 				String str;
 				while((str=fr.readLine())!=null){
 					input.add(str);
@@ -420,7 +420,35 @@ public class SceneController extends AnchorPane{
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			
+			 
+			/*
+			CalculationHandler ch = new CalculationHandler(values);
+			double[] calcs = ch.runCalculations();
+			XYChart.Series series = new XYChart.Series();
+	        series.setName("efficiency");
+
+			try{
+				double oxiLow = Double.parseDouble(oxiTempLow.getText().toString());
+				double oxiHigh = Double.parseDouble(oxiTempHigh.getText().toString());
+				int tick = (int)(oxiHigh - oxiLow)/5;
+				int xAxisValue = (int)oxiLow;
+
+				for (int x = 0; x < calcs.length; x++){
+					//System.out.println(calcs[x]);
+					if(x>0 && x%tick == 0 && xAxisValue+tick <=oxiHigh){
+						xAxisValue += tick;
+					}
+					series.getData().add(new XYChart.Data(Integer.toString(xAxisValue), calcs[x]));
+				}
+				h2Graph.getData().removeAll(h2Graph.getData());
+				h2Graph.getData().add(series);
+				h2Graph.setCreateSymbols(false);
+				h2Graph.setLegendVisible(false);
+				solarToFuelEfficiency.setText(Double.toString(calcs[calcs.length-1]));
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			*/
 		}
 	}
 
