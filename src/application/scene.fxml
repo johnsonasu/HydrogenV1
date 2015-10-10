@@ -207,13 +207,6 @@
           </Menu>
         </menus>
       </MenuBar>
-      <LineChart fx:id="h2Graph" layoutX="476.0" layoutY="312.0" prefHeight="478.0" prefWidth="862.0">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </LineChart>
+      <Pane fx:id="graphPane" layoutX="476.0" layoutY="312.0" prefHeight="478.0" prefWidth="862.0" />
    </children>
 </AnchorPane>

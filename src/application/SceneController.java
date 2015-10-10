@@ -6,8 +6,11 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedAreaChart;
+import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -18,11 +21,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public class SceneController extends AnchorPane{
 
-	@FXML
-	private LineChart h2Graph;
 	@FXML
 	private TextField solarDNI;
 	@FXML
@@ -67,14 +69,13 @@ public class SceneController extends AnchorPane{
 	private RadioButton higherHeatingRadio;
 	@FXML
 	private ToggleGroup heatRadios;
+	@FXML
+	private Pane graphPane;
 
 	private boolean[] invalidInput;
 	private static final int INPUT_SIZE = 16;
 
 	public void init(){
-		h2Graph.getXAxis().setLabel("Oxidation Temp (C)");
-		h2Graph.getYAxis().setLabel("Solar Efficiency (%)");
-
 		invalidInput = new boolean[INPUT_SIZE];
 		for(int x = 0; x < invalidInput.length; x++){
 			invalidInput[x] = true;
@@ -400,18 +401,26 @@ public class SceneController extends AnchorPane{
 	        series.setName("efficiency");
 			try{
 				BufferedReader fr = new BufferedReader(new FileReader(file));
-
 				String str;
 				while((str=fr.readLine())!=null){
 					input.add(str);
 				}
 				double oxiLow = Double.parseDouble(oxiTempLow.getText().toString());
-
+				double oxiHigh = Double.parseDouble(oxiTempHigh.getText().toString());
+				double xtick = (oxiHigh - oxiLow)/20;
+				double ytick = .1;
+				
 				for (int x = 0; x < input.size()-1; x++){
-					System.out.println(x+oxiLow + " and " + input.get(x));
-					series.getData().add(new XYChart.Data(Double.toString(x+oxiLow), Double.parseDouble(input.get(x))));
+					series.getData().add(new XYChart.Data((x+oxiLow), Double.parseDouble(input.get(x))));
 				}
-				h2Graph.getData().removeAll(h2Graph.getData());
+				if(graphPane.getChildren().size() > 0)
+					graphPane.getChildren().remove(0);
+				NumberAxis xAxis = new NumberAxis("Oxidation Temp (C)", oxiLow, oxiHigh, xtick);
+		        NumberAxis yAxis = new NumberAxis("Solar Efficiency (%)", (Double.parseDouble(input.get(0))-.1),(Double.parseDouble(input.get(input.size()-1))+.1), ytick);
+				LineChart h2Graph = new LineChart(xAxis, yAxis);
+				h2Graph.setMinSize(862, 478);
+				h2Graph.setMaxSize(862, 478);
+				graphPane.getChildren().add(h2Graph);
 				h2Graph.getData().add(series);
 				h2Graph.setCreateSymbols(false);
 				h2Graph.setLegendVisible(false);
