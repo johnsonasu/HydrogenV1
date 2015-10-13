@@ -267,6 +267,14 @@ public class CalculationHandler {
 
 	public double[] runCalculations(){
 
+		if (m_heatingvalue==1)
+		{
+			m_H2HV=m_H2HHV;
+		}
+		else if (m_heatingvalue==0){
+			m_H2HV=m_H2LHV;
+		}
+
 		m_LHRp = m_steamEff1000;
 		m_oxidationTempC = m_oxidationTemp;
 		m_oxidationTemp = m_oxidationTemp + 273;
@@ -276,174 +284,154 @@ public class CalculationHandler {
 		int totalLoops = (int)(m_oxidationTemp2 - m_oxidationTemp);
 		double[] solarToFuelList = new double[totalLoops];
 		int count = 0;
+		
+		while (m_oxidationTemp<m_oxidationTemp2)
+		{
 
-		while (m_oxidationTemp < m_oxidationTemp2){
+			m_oxidationTempC=m_oxidationTemp-273;
 
-			m_oxidationTempC = m_oxidationTemp - 273;
-
-			m_areaAper = (m_numberhelio*m_areaHelio) / (m_concfactor*m_intercept);
-
-			m_areaAper = Math.floor(m_areaAper * 10000) / 10000;
-
+			m_areaAper = (m_numberhelio*m_areaHelio)/(m_concfactor*m_intercept);
+			// System.out.println("aperArea = " + m_areaAper);
+			m_areaAper = Math.floor(m_areaAper*10000)/10000;
 			m_incidentPowerPrimary = m_areaHelio*m_numberhelio*m_solarDNI;
-
+			// // System.out.println("incidentP = " + m_incidentPowerPrimary);
 			m_incidentPowerRef1 = m_incidentPowerPrimary*m_reflectivity1*m_dirtFactor;
+			// // System.out.println("inciPowRef1 = " + m_incidentPowerRef1);
+			m_incidentPowerRef2=m_incidentPowerRef1*m_reflectivity2;
+			// // System.out.println("inciPowRef2 = " + m_incidentPowerRef2);
+			m_heatMirrorSecondary=m_incidentPowerRef1-m_incidentPowerRef2;
+			// System.out.println("heatMirrorSecondary = " + m_heatMirrorSecondary);
+			m_incidentPowerTrans=m_incidentPowerRef2*m_windowTransmission;
+			// System.out.println("m_incidentPowerTrans = " + m_incidentPowerTrans);
+			m_incidentPowerAper=m_incidentPowerTrans*m_intercept;
+			// System.out.println("m_incidentPowerAper = " + m_incidentPowerAper);
+			m_heatSpillAper=m_incidentPowerTrans-m_incidentPowerAper;
+			// System.out.println("m_heatSpillAper = " + m_heatSpillAper);
+			// System.out.println("m_reductionTemp = " + m_reductionTemp);
+			// System.out.println("(Math.pow(m_reductionTemp,4) = " + Math.pow(m_reductionTemp,4));
+			m_incidentPowerTotal=(m_incidentPowerAper)-(m_areaAper*m_emissivity*m_stefanBoltzmann*(Math.pow(m_reductionTemp,4)-Math.pow(m_tempAtmK,4)));
+			// System.out.println("m_incidentPowerTotal = " + m_incidentPowerTotal);
+			m_tempStep=m_reductionTemp-m_oxidationTemp;
+			// System.out.println("m_tempStep = " + m_tempStep);
+			m_logPressureO2=(m_td2H2Op0*Math.pow(m_oxidationTempC,0))+(m_td2H2Op1*Math.pow(m_oxidationTempC,1))+(m_td2H2Op2*Math.pow(m_oxidationTempC,2))+(m_td2H2Op3*
+					Math.pow(m_oxidationTempC,3))+(m_td2H2Op4*Math.pow(m_oxidationTempC,4))+(m_td2H2Op5*Math.pow(m_oxidationTempC,5))+(m_td2H2Op6*Math.pow(m_oxidationTempC,6))+
+					(m_td2H2Op7*Math.pow(m_oxidationTempC,7))+(m_td2H2Op8*Math.pow(m_oxidationTempC,8));
+			// System.out.println("m_logPressureO2 = " + m_logPressureO2);
+			m_partialPressureO2=Math.pow(10,m_logPressureO2);
+			// System.out.println("m_partialPressureO2 = " + m_partialPressureO2);
+			m_polyFit1=m_curveFitA0+(m_curveFitA1*m_oxidationTemp)+(m_curveFitA2*Math.pow(m_oxidationTemp,2));
+			// System.out.println("m_polyFit1 = " + m_polyFit1);
+			m_polyFit2=m_curveFitA3+(m_curveFitA4*m_oxidationTemp)+(m_curveFitA5*Math.pow(m_oxidationTemp,2));
+			// System.out.println("m_polyFit2 = " + m_polyFit2);
+			m_polyFit3=m_curveFitA6+(m_curveFitA7*m_oxidationTemp)+(m_curveFitA8*Math.pow(m_oxidationTemp,2));
+			// System.out.println("m_polyFit3 = " + m_polyFit3);
+			m_deltaOx= Math.pow(10,(m_polyFit1+(m_polyFit2*m_logPressureO2)+(m_polyFit3*Math.pow(m_logPressureO2,2))));
+			// System.out.println("m_deltaOx = " + m_deltaOx);
+			m_enthalpyRedO2=(m_deltaHx0+(m_deltaHx1*m_deltaOx)+(m_deltaHx2*Math.pow(m_deltaOx,2)))*1000;
+			// System.out.println("m_enthalpyRedO2 = " + m_enthalpyRedO2);
+			m_enthalpyRedDelta=0.5*m_enthalpyRedO2;
+			// System.out.println("m_enthalpyRedDelta = " + m_enthalpyRedDelta);
+			m_deltaTR= Math.pow(10,(m_fitcoef1+m_fitcoef2*Math.log10(m_themredpressure)+m_fitcoef3*Math.log10(Math.pow(m_themredpressure,2))));
+			// System.out.println("m_deltaTR = " + m_deltaTR);
+			m_enthalpyReduction= (m_deltaHx0+(m_deltaHx1*m_deltaTR)+(m_deltaHx2*Math.pow(m_deltaTR,2)))*1000;
+			// System.out.println("m_enthalpyReduction = " + m_enthalpyReduction);
 
-			m_incidentPowerRef2 = m_incidentPowerRef1*m_reflectivity2;
-
-			m_heatMirrorSecondary = m_incidentPowerRef1 - m_incidentPowerRef2;
-
-			m_incidentPowerTrans = m_incidentPowerRef2*m_windowTransmission;
-
-			m_incidentPowerAper = m_incidentPowerTrans*m_intercept;
-
-			m_heatSpillAper = m_incidentPowerTrans - m_incidentPowerAper;
-
-			m_incidentPowerTotal = (m_incidentPowerAper)-(m_areaAper*m_emissivity*m_stefanBoltzmann*(Math.pow(m_reductionTemp, 4) - Math.pow(m_tempAtmK, 4)));
-
-			m_tempStep = m_reductionTemp - m_oxidationTemp;
-
-			m_logPressureO2 = (m_td2H2Op0*Math.pow(m_oxidationTempC, 0)) + (m_td2H2Op1*Math.pow(m_oxidationTempC, 1)) + (m_td2H2Op2*Math.pow(m_oxidationTempC, 2)) + (m_td2H2Op3*Math.pow(m_oxidationTempC, 3)) + (m_td2H2Op4*Math.pow(m_oxidationTempC, 4)) + (m_td2H2Op5*Math.pow(m_oxidationTempC, 5)) + (m_td2H2Op6*Math.pow(m_oxidationTempC, 6)) + (m_td2H2Op7*Math.pow(m_oxidationTempC, 7)) + (m_td2H2Op8*Math.pow(m_oxidationTempC, 8));
-
-			m_partialPressureO2 = Math.pow(10, m_logPressureO2);
-
-			m_polyFit1 = m_curveFitA0 + (m_curveFitA1*m_oxidationTemp) + (m_curveFitA2*Math.pow(m_oxidationTemp, 2));
-
-			m_polyFit2 = m_curveFitA3 + (m_curveFitA4*m_oxidationTemp) + (m_curveFitA5*Math.pow(m_oxidationTemp, 2));
-
-			m_polyFit3 = m_curveFitA6 + (m_curveFitA7*m_oxidationTemp) + (m_curveFitA8*Math.pow(m_oxidationTemp, 2));
-
-			m_deltaOx = Math.pow(10, (m_polyFit1 + (m_polyFit2*m_logPressureO2) + (m_polyFit3*Math.pow(m_logPressureO2, 2))));
-
-			m_enthalpyRedO2 = (m_deltaHx0 + (m_deltaHx1*m_deltaOx) + (m_deltaHx2*Math.pow(m_deltaOx, 2))) * 1000;
-
-			m_enthalpyRedDelta = 0.5*m_enthalpyRedO2;
-
-			m_deltaTR = Math.pow(10, (m_fitcoef1 + m_fitcoef2*Math.log10(m_themredpressure) + m_fitcoef3*Math.log10(Math.pow(m_themredpressure, 2))));
-
-			m_enthalpyReduction = (m_deltaHx0 + (m_deltaHx1*m_deltaTR) + (m_deltaHx2*Math.pow(m_deltaTR, 2))) * 1000;
-
-
-			if (m_deltaTR - m_deltaOx > 0)
+			if (m_deltaTR-m_deltaOx>0)
 			{
-				m_deltaDelta = m_deltaTR - m_deltaOx;
+				m_deltaDelta=m_deltaTR-m_deltaOx;
 			}
-			else if (m_deltaTR - m_deltaOx > 0)
+			else if (m_deltaTR-m_deltaOx>0)
 			{
-				m_deltaDelta = 0.00001;
-			}
+				m_deltaDelta= 0.00001;
+			}	
+			// System.out.println("m_deltaDelta = " + m_deltaDelta);
+			m_enthalpyRedAvg=((m_enthalpyReduction)*0.5+m_enthalpyRedDelta)*0.5;
+			// System.out.println("m_enthalpyRedAvg = " + m_enthalpyRedAvg);
+			m_ratioOxToH2=1/m_deltaDelta;
+			// System.out.println("m_ratioOxToH2 = " + m_ratioOxToH2);
+			m_polyFitFP1=m_curveFitC0+(m_curveFitC1*m_oxidationTemp)+(m_curveFitC2*Math.pow(m_oxidationTemp,2));
+			// System.out.println("m_polyFitFP1 = " + m_polyFitFP1);
+			m_polyFitFP2=m_curveFitC3+(m_curveFitC4*m_oxidationTemp)+(m_curveFitC5*Math.pow(m_oxidationTemp,2));
+			// System.out.println("m_polyFitFP2 = " + m_polyFitFP2);
+			m_polyFitFP3=m_curveFitC6+(m_curveFitC7*m_oxidationTemp)+(m_curveFitC8*Math.pow(m_oxidationTemp,2));
+			// System.out.println("m_polyFitFP3 = " + m_polyFitFP3);
+			m_pressureOxide=Math.pow(10,(m_polyFitFP1+(m_polyFitFP2*Math.log10(m_deltaTR))+(m_polyFitFP3*(Math.pow(Math.log10(m_deltaTR),2)))))/m_pressureAtm;
+			// System.out.println("m_pressureOxide = " + m_pressureOxide);
+			m_dissocConst=Math.pow(10,((m_td2H2OK0*Math.pow(m_oxidationTempC,0))+(m_td2H2OK1*Math.pow(m_oxidationTempC,1))+(m_td2H2OK2*Math.pow(m_oxidationTempC,2))+
+					(m_td2H2OK3*Math.pow(m_oxidationTempC,3))+(m_td2H2OK4*Math.pow(m_oxidationTempC,4))+(m_td2H2OK5*Math.pow(m_oxidationTempC,5))+
+					(m_td2H2OK6*Math.pow(m_oxidationTempC,6))+(m_td2H2OK7*Math.pow(m_oxidationTempC,7))+(m_td2H2OK8*Math.pow(m_oxidationTempC,8))));
+			// System.out.println("m_dissocConst = " + m_dissocConst);
+			m_ratioH2OToH2=(Math.sqrt(m_pressureOxide))/m_dissocConst;
 
-			m_enthalpyRedAvg = ((m_enthalpyReduction)*0.5 + m_enthalpyRedDelta)*0.5;
-
-			m_ratioOxToH2 = 1 / m_deltaDelta;
-
-			m_polyFitFP1 = m_curveFitC0 + (m_curveFitC1*m_oxidationTemp) + (m_curveFitC2*Math.pow(m_oxidationTemp, 2));
-
-			m_polyFitFP2 = m_curveFitC3 + (m_curveFitC4*m_oxidationTemp) + (m_curveFitC5*Math.pow(m_oxidationTemp, 2));
-
-			m_polyFitFP3 = m_curveFitC6 + (m_curveFitC7*m_oxidationTemp) + (m_curveFitC8*Math.pow(m_oxidationTemp, 2));
-
-			m_pressureOxide = Math.pow(10, (m_polyFitFP1 + (m_polyFitFP2*Math.log10(m_deltaTR)) + (m_polyFitFP3*(Math.pow(Math.log10(m_deltaTR), 2))))) / m_pressureAtm;
-
-			m_dissocConst = Math.pow(10, ((m_td2H2OK0*Math.pow(m_oxidationTempC, 0)) + (m_td2H2OK1*Math.pow(m_oxidationTempC, 1)) + (m_td2H2OK2*Math.pow(m_oxidationTempC, 2)) + (m_td2H2OK3*Math.pow(m_oxidationTempC, 3)) + (m_td2H2OK4*Math.pow(m_oxidationTempC, 4)) + (m_td2H2OK5*Math.pow(m_oxidationTempC, 5)) + (m_td2H2OK6*Math.pow(m_oxidationTempC, 6)) + (m_td2H2OK7*Math.pow(m_oxidationTempC, 7)) + (m_td2H2OK8*Math.pow(m_oxidationTempC, 8))));
-
-			m_ratioH2OToH2 = (Math.sqrt(m_pressureOxide)) / m_dissocConst;
-
-			if (m_ratioH2OToH2 > 1)
+			if (m_ratioH2OToH2>1)
 			{
-				m_ratioH2OToH2 = m_ratioH2OToH2;
+				m_ratioH2OToH2=m_ratioH2OToH2;
 			}
-			else {
-				m_ratioH2OToH2 = 1;
-			}
+			else m_ratioH2OToH2=1;
+			// System.out.println("m_ratioH2OToH2 = " + m_ratioH2OToH2);
+			m_qLift=(m_ratioOxToH2*0.172*9.81*m_elevatorHeight)/(m_effLifting*m_effHeatElec); 
+			// System.out.println("m_qLift = " + m_qLift);
+			m_qOxHt=(m_tempStep)*(m_specHeatFuel)*(m_ratioOxToH2)*(1-m_solidRecup);
+			// System.out.println("m_qOxHt = " + m_qOxHt);
 
-			m_qLift = (m_ratioOxToH2*0.172*9.81*m_elevatorHeight) / (m_effLifting*m_effHeatElec);
-
-			m_qOxHt = (m_tempStep)*(m_specHeatFuel)*(m_ratioOxToH2)*(1 - m_solidRecup);
-
-			m_qRt = (m_ratioH2OToH2)*((100 - m_tempAtmC)*m_specHeatH2O)*(1 - m_steamEff1000);
-
-			m_qPump = ((m_ratioH2OToH2)*(m_idealGasConstant)*(m_tempVapor)*Math.log(m_pressureAtmatm)*(1)*(m_latentHeat)) / (m_effElecPump*m_effHeatElec);
-
-			m_qPex = (m_ratioH2OToH2)*(m_evapHeatH2O)*((1 - m_steamEff1000))*(1)*(m_latentHeat);
-
-			m_qHeat1000 = (m_ratioH2OToH2)*(900 * m_specHeatSteam)*(1 - m_steamEff1000);
-
-			if (m_oxidationTemp > 1000)
+			m_qRt=(m_ratioH2OToH2)*((100-m_tempAtmC)*m_specHeatH2O)*(1-m_steamEff1000);  
+			// System.out.println("m_qRt = " + m_qRt);
+			m_qPump=((m_ratioH2OToH2)*(m_idealGasConstant)*(m_tempVapor)*Math.log(m_pressureAtmatm)*(1)*(m_latentHeat))/(m_effElecPump*m_effHeatElec);
+			// System.out.println("m_qPump = " + m_qPump);
+			m_qPex=(m_ratioH2OToH2)*(m_evapHeatH2O)*((1-m_steamEff1000))*(1)*(m_latentHeat);    
+			// System.out.println("m_qPex = " + m_qPex);
+			m_qHeat1000=(m_ratioH2OToH2)*(900*m_specHeatSteam)*(1-m_steamEff1000);
+			// System.out.println("m_qHeat1000 = " + m_qHeat1000);
+			if (m_oxidationTemp>1000)
 			{
-				m_qHeat1001 = (m_ratioH2OToH2)*(m_specHeatSteam)*(m_oxidationTempC - 1000)*(1 - m_steamEff1001);
+				m_qHeat1001=(m_ratioH2OToH2)*(m_specHeatSteam)*(m_oxidationTempC-1000)*(1-m_steamEff1001);
 			}
-			else{
-				m_qHeat1001 = 0;
-			}
-
-			m_qH2Ophase = 900 + m_qRt + m_qPump + m_qPex + m_qHeat1000 + m_qHeat1001;
-
-			m_qPmp = 0.018*m_ratioH2OToH2*9.81*((m_pressureFP / m_pressureAtm) + 1) * 10 / (m_effLifting*m_effHeatElec);
-
-			m_qPmpTotal = 142787 + m_qPmp;
-
-			m_qReox = m_enthalpyRedAvg - m_H2HV;
-
-			m_qAuxNt = (m_qOxHt * 1) + m_qReox + m_qO2 - m_qH2Ophase - m_qPmpTotal - m_qLift - 5978.081;
-
-			if (m_qAuxNt < 0)
+			else  m_qHeat1001=0;
+			// System.out.println("m_qHeat1001 = " + m_qHeat1001);
+			m_qH2Ophase=900+m_qRt+m_qPump+m_qPex+m_qHeat1000+m_qHeat1001;
+			// System.out.println("m_qH2Ophase = " + m_qH2Ophase);
+			m_qPmp=0.018*m_ratioH2OToH2*9.81*((m_pressureFP/m_pressureAtm)+1)*10/(m_effLifting*m_effHeatElec);    
+			// System.out.println("m_qPmp = " + m_qPmp);
+			m_qPmpTotal=142787+m_qPmp;
+			// System.out.println("m_qPmpTotal = " + m_qPmpTotal);
+			m_qReox=m_enthalpyRedAvg-m_H2HV;
+			// System.out.println("m_qReox = " + m_qReox);
+			m_qAuxNt=(m_qOxHt*1)+m_qReox+m_qO2-m_qH2Ophase-m_qPmpTotal-m_qLift-5978.081;
+			// System.out.println("m_qAuxNt = " + m_qAuxNt);
+			if (m_qAuxNt<0)
 			{
-				m_qNeed = m_enthalpyRedAvg + m_qOxHt - m_qAuxNt;
+				m_qNeed=m_enthalpyRedAvg+m_qOxHt-m_qAuxNt;
 			}
-			if (m_qAuxNt > 0)
+			if (m_qAuxNt>0)
 			{
-				m_qNeed = m_enthalpyRedAvg + m_qOxHt;
+				m_qNeed=m_enthalpyRedAvg+m_qOxHt;		
 			}
-			if (m_deltaDelta != 0.001)
+			// System.out.println("m_qNeed = " + m_qNeed);
+			if (m_deltaDelta!= 0.001)
 			{
-				m_molH2Output = (m_incidentPowerTotal / m_qNeed);
+				m_molH2Output= (m_incidentPowerTotal/m_qNeed);
 			}
-			else {
-				m_molH2Output = 0.0000000001;
-			}
-
-			m_wattH2Output = m_molH2Output*m_H2HV;
-
-			m_reactorEffOut = (m_wattH2Output / m_incidentPowerAper) * 100;
-
-			m_reactorEffOut = Math.ceil(m_reactorEffOut * 10) / 10;
-
-			m_solartoFuelEff = (m_wattH2Output / m_incidentPowerPrimary) * 100;
-
-			m_solartoFuelEff = Math.ceil(m_solartoFuelEff * 10) / 10;
-
-			m_thermalEffOut = (m_wattH2Output / m_incidentPowerTotal) * 100;
-
-			m_thermalEffOut = Math.ceil(m_thermalEffOut * 10) / 10;
-
-			if (m_solartoFuelEff > m_temp)
-			{
-				m_solartoFuelEff = m_solartoFuelEff;
-			}
-			else {
-				m_solartoFuelEff = m_temp;
-			}
-			
-			m_temp = m_solartoFuelEff;
-			
-			m_oxidationTemp = m_oxidationTemp + 1;m_solartoFuelEff=(m_wattH2Output/m_incidentPowerPrimary)*100;
+			else m_molH2Output= 0.0000000001;
+			// System.out.println("m_molH2Output = " + m_molH2Output);
+			m_wattH2Output=m_molH2Output*m_H2HV;
+			// System.out.println("m_wattH2Output = " + m_wattH2Output);
+			m_reactorEffOut=(m_wattH2Output/m_incidentPowerAper)*100;
+			m_reactorEffOut= Math.ceil(m_reactorEffOut*10)/10;
+			// System.out.println("m_reactorEffOut = " + m_reactorEffOut);
+			m_solartoFuelEff=(m_wattH2Output/m_incidentPowerPrimary)*100;
 			m_solartoFuelEff= Math.ceil(m_solartoFuelEff*10)/10;
 			m_thermalEffOut=(m_wattH2Output/m_incidentPowerTotal)*100;
 			m_thermalEffOut= Math.ceil(m_thermalEffOut*10)/10;
+			// System.out.println("m_thermalEffOut = " + m_thermalEffOut);
 
-			if (m_solartoFuelEff > m_temp)
+			if (m_solartoFuelEff>m_temp)
 			{
-				m_solartoFuelEff = m_solartoFuelEff;
+				m_solartoFuelEff=m_solartoFuelEff;	
 			}
-			else {
-				m_solartoFuelEff = m_temp;
-			}
-			
-			m_temp = m_solartoFuelEff;
-			
-			m_oxidationTemp = m_oxidationTemp + 1;
-			
+			else m_solartoFuelEff=m_temp;
+			m_temp=m_solartoFuelEff;
+			m_oxidationTemp=m_oxidationTemp+1;
+
 			solarToFuelList[count] = m_solartoFuelEff;
 
 			count++;

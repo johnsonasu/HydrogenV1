@@ -291,11 +291,11 @@ using namespace std;
 	cin>> m_heatingvalue;
 	
 	
-	if (m_heatingvalue=1)
+	if (m_heatingvalue==1)
 	{
 	 m_H2HV=m_H2HHV;
 	}
-	else if (m_heatingvalue=0)
+	else if (m_heatingvalue==0)
 	m_H2HV=m_H2LHV;
 	
 	
@@ -312,46 +312,48 @@ using namespace std;
 	m_oxidationTempC=m_oxidationTemp-273;
 	
 	m_areaAper=(m_numberhelio*m_areaHelio)/(m_concfactor*m_intercept);
-//	cout << "area of the aperture is = " << m_areaAper << "\n";
+	cout << "area of the aperture is = " << m_areaAper << "\n";
 	m_areaAper= floorf(m_areaAper*10000)/10000;
 	m_incidentPowerPrimary=m_areaHelio*m_numberhelio*m_solarDNI;
-//	cout << "incident power is =  "  << m_incidentPowerPrimary << "\n"; 
+	cout << "incident power is =  "  << m_incidentPowerPrimary << "\n"; 
 	m_incidentPowerRef1=m_incidentPowerPrimary*m_reflectivity1*m_dirtFactor;
-//	cout << "incident power after first ref is =  " << m_incidentPowerRef1 << "\n";
+	cout << "incident power after first ref is =  " << m_incidentPowerRef1 << "\n";
 	m_incidentPowerRef2=m_incidentPowerRef1*m_reflectivity2;
-//	cout << "inceident power adter second reflection =  "<< m_incidentPowerRef2 << "\n";
+	cout << "inceident power adter second reflection =  "<< m_incidentPowerRef2 << "\n";
 	m_heatMirrorSecondary=m_incidentPowerRef1-m_incidentPowerRef2;
-//	cout << "heat mirror secondary is =  " << m_heatMirrorSecondary << "\n" ;
+	cout << "heat mirror secondary is =  " << m_heatMirrorSecondary << "\n" ;
 	m_incidentPowerTrans=m_incidentPowerRef2*m_windowTransmission;
-//	cout << " incident power trans is =  " << m_incidentPowerTrans << "\n"; 
+	cout << " incident power trans is =  " << m_incidentPowerTrans << "\n"; 
 	m_incidentPowerAper=m_incidentPowerTrans*m_intercept;
-//	cout << "inceident power aper is =  " << m_incidentPowerAper << "\n" ;
+	cout << "inceident power aper is =  " << m_incidentPowerAper << "\n" ;
 	m_heatSpillAper=m_incidentPowerTrans-m_incidentPowerAper;
-//	cout << "heat spiller aper is =  " << m_heatSpillAper << "\n";
+	cout << "heat spiller aper is =  " << m_heatSpillAper << "\n";
+	cout << "m_reductionTemp =  " << m_reductionTemp << "\n";
+	cout << "pow(m_reductionTemp,4) =  " << pow(m_reductionTemp, 4) << "\n";
 	m_incidentPowerTotal=(m_incidentPowerAper)-(m_areaAper*m_emissivity*m_stefanBoltzmann*(pow(m_reductionTemp,4)-pow(m_tempAtmK,4)));
-//	cout << "total incident power is =  " << m_incidentPowerTotal << "\n";
+	cout << "total incident power is =  " << m_incidentPowerTotal << "\n";
 	m_tempStep=m_reductionTemp-m_oxidationTemp;
-//	cout << "the temp difference is =  " << m_tempStep << "\n" ;
+	cout << "the temp difference is =  " << m_tempStep << "\n" ;
 	m_logPressureO2=(m_td2H2Op0*pow(m_oxidationTempC,0))+(m_td2H2Op1*pow(m_oxidationTempC,1))+(m_td2H2Op2*pow(m_oxidationTempC,2))+(m_td2H2Op3*pow(m_oxidationTempC,3))+(m_td2H2Op4*pow(m_oxidationTempC,4))+(m_td2H2Op5*pow(m_oxidationTempC,5))+(m_td2H2Op6*pow(m_oxidationTempC,6))+(m_td2H2Op7*pow(m_oxidationTempC,7))+(m_td2H2Op8*pow(m_oxidationTempC,8));
-//	cout << "the log pressure O2 is =  " << m_logPressureO2 << "\n" ;
+	cout << "the log pressure O2 is =  " << m_logPressureO2 << "\n" ;
     m_partialPressureO2=pow(10,m_logPressureO2);
-//    cout << "partial pressure of O2 is =  " << m_partialPressureO2 << "\n";
+    cout << "partial pressure of O2 is =  " << m_partialPressureO2 << "\n";
 	m_polyFit1=m_curveFitA0+(m_curveFitA1*m_oxidationTemp)+(m_curveFitA2*pow(m_oxidationTemp,2));
-//	cout << "poly fit1 is =  " << m_polyFit1 << "\n";
+	cout << "poly fit1 is =  " << m_polyFit1 << "\n";
 	m_polyFit2=m_curveFitA3+(m_curveFitA4*m_oxidationTemp)+(m_curveFitA5*pow(m_oxidationTemp,2));
-//	cout << "polyfit2 is =  " << m_polyFit2 << "\n";
+	cout << "polyfit2 is =  " << m_polyFit2 << "\n";
 	m_polyFit3=m_curveFitA6+(m_curveFitA7*m_oxidationTemp)+(m_curveFitA8*pow(m_oxidationTemp,2));
-//	cout << "polyfit3 is =  " << m_polyFit3 << "\n" ;
+	cout << "polyfit3 is =  " << m_polyFit3 << "\n" ;
 	m_deltaOx=pow(10,(m_polyFit1+(m_polyFit2*m_logPressureO2)+(m_polyFit3*pow(m_logPressureO2,2))));
-//	cout << "delta OX is =  " << m_deltaOx << "\n" ;
+	cout << "delta OX is =  " << m_deltaOx << "\n" ;
 	m_enthalpyRedO2=(m_deltaHx0+(m_deltaHx1*m_deltaOx)+(m_deltaHx2*pow(m_deltaOx,2)))*1000;
-//	cout << "enthalpy reduction is O2 =  " << m_enthalpyRedO2 << "\n" ;
+	cout << "enthalpy reduction is O2 =  " << m_enthalpyRedO2 << "\n" ;
 	m_enthalpyRedDelta=0.5*m_enthalpyRedO2;
-//	cout << "enthalpy reduction delta is =  " << m_enthalpyRedDelta << "\n" ;
+	cout << "enthalpy reduction delta is =  " << m_enthalpyRedDelta << "\n" ;
 	m_deltaTR= pow(10,(m_fitcoef1+m_fitcoef2*log10(m_themredpressure)+m_fitcoef3*log10(pow(m_themredpressure,2))));
-//	cout << "the value of deltaTR is =  " << m_deltaTR << "\n";
+	cout << "the value of deltaTR is =  " << m_deltaTR << "\n";
 	m_enthalpyReduction= (m_deltaHx0+(m_deltaHx1*m_deltaTR)+(m_deltaHx2*pow(m_deltaTR,2)))*1000;
-//	cout << "enthalpy redduction is =  "  << m_enthalpyReduction << "\n" ;
+	cout << "enthalpy redduction is =  "  << m_enthalpyReduction << "\n" ;
 
 	if (m_deltaTR-m_deltaOx>0)
 	{
@@ -361,21 +363,21 @@ using namespace std;
 	{
 	m_deltaDelta= 0.00001;
 	}	
-//	cout << "delta delta is =  " << m_deltaDelta << "\n";
+	cout << "delta delta is =  " << m_deltaDelta << "\n";
 	m_enthalpyRedAvg=((m_enthalpyReduction)*0.5+m_enthalpyRedDelta)*0.5;
-//	cout << "enthalpy reduction avg is =  " << m_enthalpyRedAvg << "\n";
+	cout << "enthalpy reduction avg is =  " << m_enthalpyRedAvg << "\n";
 	m_ratioOxToH2=1/m_deltaDelta;
-//	cout << "ratio ox to hydrgen is =  " <<m_ratioOxToH2 << "\n";
+	cout << "ratio ox to hydrgen is =  " <<m_ratioOxToH2 << "\n";
 	m_polyFitFP1=m_curveFitC0+(m_curveFitC1*m_oxidationTemp)+(m_curveFitC2*pow(m_oxidationTemp,2));
-//	cout << "polyfitP1 is =  " << m_polyFitFP1 << "\n";
+	cout << "polyfitP1 is =  " << m_polyFitFP1 << "\n";
 	m_polyFitFP2=m_curveFitC3+(m_curveFitC4*m_oxidationTemp)+(m_curveFitC5*pow(m_oxidationTemp,2));
-//	cout << "polyfit2 is =  " << m_polyFitFP2 << "\n";
+	cout << "polyfit2 is =  " << m_polyFitFP2 << "\n";
 	m_polyFitFP3=m_curveFitC6+(m_curveFitC7*m_oxidationTemp)+(m_curveFitC8*pow(m_oxidationTemp,2));
-//	cout << "polyfit3 is =  " << m_polyFitFP3 << "\n";
+	cout << "polyfit3 is =  " << m_polyFitFP3 << "\n";
 	m_pressureOxide=pow(10,(m_polyFitFP1+(m_polyFitFP2*log10(m_deltaTR))+(m_polyFitFP3*(pow(log10(m_deltaTR),2)))))/m_pressureAtm;
-//	cout << "the partial pressure oxide is =  " << m_pressureOxide << "\n";
+	cout << "the partial pressure oxide is =  " << m_pressureOxide << "\n";
 	m_dissocConst=pow(10,((m_td2H2OK0*pow(m_oxidationTempC,0))+(m_td2H2OK1*pow(m_oxidationTempC,1))+(m_td2H2OK2*pow(m_oxidationTempC,2))+(m_td2H2OK3*pow(m_oxidationTempC,3))+(m_td2H2OK4*pow(m_oxidationTempC,4))+(m_td2H2OK5*pow(m_oxidationTempC,5))+(m_td2H2OK6*pow(m_oxidationTempC,6))+(m_td2H2OK7*pow(m_oxidationTempC,7))+(m_td2H2OK8*pow(m_oxidationTempC,8))));
-//	cout << "dissoacition constant is =  " << m_dissocConst <<"\n" ;
+	cout << "dissoacition constant is =  " << m_dissocConst <<"\n" ;
 	m_ratioH2OToH2=(sqrt(m_pressureOxide))/m_dissocConst;
 	
 	if (m_ratioH2OToH2>1)
@@ -383,36 +385,36 @@ using namespace std;
 	m_ratioH2OToH2=m_ratioH2OToH2;
 	}
 	else m_ratioH2OToH2=1;
-//	cout << "ratio of H2O to O2 is =  " <<  m_ratioH2OToH2 << "\n" ;
+	cout << "ratio of H2O to O2 is =  " <<  m_ratioH2OToH2 << "\n" ;
 	m_qLift=(m_ratioOxToH2*0.172*9.81*m_elevatorHeight)/(m_effLifting*m_effHeatElec); 
-//	cout << " work for lifting is =  " << m_qLift << "\n" ;
+	cout << " work for lifting is =  " << m_qLift << "\n" ;
 	m_qOxHt=(m_tempStep)*(m_specHeatFuel)*(m_ratioOxToH2)*(1-m_solidRecup);
-//	cout << "heat for oxide heating is =  " << m_qOxHt << "\n" ;
+	cout << "heat for oxide heating is =  " << m_qOxHt << "\n" ;
 	   
 	m_qRt=(m_ratioH2OToH2)*((100-m_tempAtmC)*m_specHeatH2O)*(1-m_steamEff1000);  
-//	cout << "heat required to heat from room temp = " << m_qRt << "\n" ;
+	cout << "heat required to heat from room temp = " << m_qRt << "\n" ;
 	m_qPump=((m_ratioH2OToH2)*(m_idealGasConstant)*(m_tempVapor)*log(m_pressureAtmatm)*(1)*(m_latentHeat))/(m_effElecPump*m_effHeatElec);
-//	cout << "the pumping work is =  " << m_qPump << "\n";
+	cout << "the pumping work is =  " << m_qPump << "\n";
 	m_qPex=(m_ratioH2OToH2)*(m_evapHeatH2O)*((1-m_steamEff1000))*(1)*(m_latentHeat);    
-//	cout << "heaat req for evaporation " << m_qPex << "\n";
+	cout << "heaat req for evaporation " << m_qPex << "\n";
 	m_qHeat1000=(m_ratioH2OToH2)*(900*m_specHeatSteam)*(1-m_steamEff1000);
-//	cout << "addittiona heat1 for steam generation  =  " << m_qHeat1000 << "\n" ;
+	cout << "addittiona heat1 for steam generation  =  " << m_qHeat1000 << "\n" ;
 	if (m_oxidationTemp>1000)
 	{
 	m_qHeat1001=(m_ratioH2OToH2)*(m_specHeatSteam)*(m_oxidationTempC-1000)*(1-m_steamEff1001);
 	}
 	else  m_qHeat1001=0;
-//	cout << "additional heat2 req for steam generation =  " << m_qHeat1001 << "\n" ;
+	cout << "additional heat2 req for steam generation =  " << m_qHeat1001 << "\n" ;
 	m_qH2Ophase=900+m_qRt+m_qPump+m_qPex+m_qHeat1000+m_qHeat1001;
-//	cout << "total heat needed till redox =  " << m_qH2Ophase << "\n";
+	cout << "total heat needed till redox =  " << m_qH2Ophase << "\n";
 	m_qPmp=0.018*m_ratioH2OToH2*9.81*((m_pressureFP/m_pressureAtm)+1)*10/(m_effLifting*m_effHeatElec);    
-//	cout << "heat equivalent pump work is =  " << m_qPmp << "\n" ;
+	cout << "heat equivalent pump work is =  " << m_qPmp << "\n" ;
 	m_qPmpTotal=142787+m_qPmp;
-//	cout << "the total pump work is =  " << m_qPmpTotal << "\n";
+	cout << "the total pump work is =  " << m_qPmpTotal << "\n";
 	m_qReox=m_enthalpyRedAvg-m_H2HV;
-//	cout << "heat of redox reaction is =  " << m_qReox << "\n" ;
+	cout << "heat of redox reaction is =  " << m_qReox << "\n" ;
 	m_qAuxNt=(m_qOxHt*1)+m_qReox+m_qO2-m_qH2Ophase-m_qPmpTotal-m_qLift-5978.081;
-//	cout << "Net waste heat is =  " << m_qAuxNt << "\n";
+	cout << "Net waste heat is =  " << m_qAuxNt << "\n";
 	if (m_qAuxNt<0)
 	{
 	m_qNeed=m_enthalpyRedAvg+m_qOxHt-m_qAuxNt;
@@ -421,23 +423,23 @@ using namespace std;
 	{
 	m_qNeed=m_enthalpyRedAvg+m_qOxHt;		
 	}
-//	cout << "heat needed is =  " << m_qNeed << "\n" ;
+	cout << "heat needed is =  " << m_qNeed << "\n" ;
 	if (m_deltaDelta!= 0.001)
 	{
 	m_molH2Output= (m_incidentPowerTotal/m_qNeed);
 	}
 	else m_molH2Output= 0.0000000001;
-//	cout << "Hydrogen output in moles is =  " << m_molH2Output << "\n" ;
+	cout << "Hydrogen output in moles is =  " << m_molH2Output << "\n" ;
 	m_wattH2Output=m_molH2Output*m_H2HV;
-//	cout << "thermochemical hydrogen output in watts is =  " << m_wattH2Output << "\n" ;
+	cout << "thermochemical hydrogen output in watts is =  " << m_wattH2Output << "\n" ;
 	m_reactorEffOut=(m_wattH2Output/m_incidentPowerAper)*100;
 	m_reactorEffOut= ceilf(m_reactorEffOut*10)/10;
-//	cout << "reactor efficiency is =  " << m_reactorEffOut << "\n" ;
+	cout << "reactor efficiency is =  " << m_reactorEffOut << "\n" ;
 	m_solartoFuelEff=(m_wattH2Output/m_incidentPowerPrimary)*100;
 	m_solartoFuelEff= ceilf(m_solartoFuelEff*10)/10;
 	m_thermalEffOut=(m_wattH2Output/m_incidentPowerTotal)*100;
 	m_thermalEffOut= ceilf(m_thermalEffOut*10)/10;
-//	cout << "thermal efficiency of the system is =  " << m_thermalEffOut << "\n";
+	cout << "thermal efficiency of the system is =  " << m_thermalEffOut << "\n";
 	
 	if (m_solartoFuelEff>m_temp)
 	{
@@ -450,27 +452,8 @@ using namespace std;
 	}
 	
 	cout << "solar to fuel efficiency is  =  " << m_solartoFuelEff ;
+
+	system("pause");
 return 0;
 }
 
-
-
-//cout << "enter the valuee of Solar incidence radiation value in W/m2 \n" ;
-////cin>> incidentPowerPrimary;
-////cout << "enter the value of concentration factor" ;
-//cin >>
-//cout << "enter the value of window transmitivity \n" ;
-////cin >> windowTransmission;
-//cout << " enter the value of reflectivity of primary mirror \n" ;
-////cin >> reflectivity1;
-//cout << "Enter the value of reflectivity of secondary mirror \n" ;
-////cin >>reflectivity2 ;
-//cout << "Enter the value of solar to electricity efficiency \n";
-////cin >> effSolarElec;
-//cout << "enter the value of heat to electricity efficiency \n" ;
-////cin >> effHeatElec;
-//cout << "Enter the value of reduction temperature \n" ;
-////cin >> reductionTemp;
-//cout << "Enter the value of reduction temperature \n" ;
-////cin >> oxidationTemp;
-//cout << "enter whether the value of latentHeat to be included or not ? \n" ;

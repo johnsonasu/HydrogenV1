@@ -393,6 +393,7 @@ public class SceneController extends AnchorPane{
 				values[16] = "0";
 			}
 
+			/*
 			HydrogenProxy proxy = new HydrogenProxy();
 			String filename = proxy.calculate(values);
 			File file = new File(filename);
@@ -430,7 +431,7 @@ public class SceneController extends AnchorPane{
 				e.printStackTrace();
 			}
 			 
-			/*
+			*/
 			CalculationHandler ch = new CalculationHandler(values);
 			double[] calcs = ch.runCalculations();
 			XYChart.Series series = new XYChart.Series();
@@ -440,16 +441,19 @@ public class SceneController extends AnchorPane{
 				double oxiLow = Double.parseDouble(oxiTempLow.getText().toString());
 				double oxiHigh = Double.parseDouble(oxiTempHigh.getText().toString());
 				int tick = (int)(oxiHigh - oxiLow)/5;
-				int xAxisValue = (int)oxiLow;
+				double xtick = (oxiHigh - oxiLow)/20;
 
 				for (int x = 0; x < calcs.length; x++){
-					//System.out.println(calcs[x]);
-					if(x>0 && x%tick == 0 && xAxisValue+tick <=oxiHigh){
-						xAxisValue += tick;
-					}
-					series.getData().add(new XYChart.Data(Integer.toString(xAxisValue), calcs[x]));
+					series.getData().add(new XYChart.Data(x+oxiLow, calcs[x]));
 				}
-				h2Graph.getData().removeAll(h2Graph.getData());
+				if(graphPane.getChildren().size() > 0)
+					graphPane.getChildren().remove(0);
+				NumberAxis xAxis = new NumberAxis("Oxidation Temp (C)", oxiLow-5, oxiHigh+5, xtick);
+				NumberAxis yAxis = new NumberAxis("Solar Efficiency (%)", (calcs[0]-.1),(calcs[calcs.length-1])+.1, 1);
+				LineChart h2Graph = new LineChart(xAxis, yAxis);
+				h2Graph.setMinSize(862, 478);
+				h2Graph.setMaxSize(862, 478);
+				graphPane.getChildren().add(h2Graph);
 				h2Graph.getData().add(series);
 				h2Graph.setCreateSymbols(false);
 				h2Graph.setLegendVisible(false);
@@ -457,7 +461,7 @@ public class SceneController extends AnchorPane{
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			*/
+			
 		}
 	}
 

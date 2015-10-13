@@ -67,7 +67,7 @@ public:
 		m_gravity = 9.81;
 		m_H2Concentration = 0.05051;
 		m_molarMassWater = 18.015;
-		m_pressureFP = 101000.0;
+		m_pressureFP = 101325.0;
 		m_stefanBoltzmann = 0.0000000567804;
 		m_idealGasConstant = 8.314472;
 		m_pressureAtm = 101325.0;
@@ -122,6 +122,7 @@ public:
 		m_td2H2OK8 = -5.5223956624e-25;
 		m_LHRp=0;
 		m_temp=0;
+		m_latentHeat = 1;
 	}
 	/**
 	* Gets copy of input data.
@@ -708,7 +709,7 @@ public:
 	*/
 	SolarHydrogenIntermediate() {
 		m_enthalpyReduction = 0;
-		m_areaAper = 0;
+		m_areaAper = 0.0002;
 		m_solarFieldEff = 0;
 		m_reflectivity = 0;
 		m_incidentPowerPrimary = 0;
