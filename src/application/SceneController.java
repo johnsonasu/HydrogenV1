@@ -436,6 +436,14 @@ public class SceneController extends AnchorPane{
 			double[] calcs = ch.runCalculations();
 			XYChart.Series series = new XYChart.Series();
 	        series.setName("efficiency");
+	        
+	        double max = calcs[0];
+	        
+	        for(int x = 0; x < calcs.length; x++){
+	        	if(max < calcs[x]){
+	        		max = calcs[x];
+	        	}
+	        }
 
 			try{
 				double oxiLow = Double.parseDouble(oxiTempLow.getText().toString());
@@ -449,7 +457,7 @@ public class SceneController extends AnchorPane{
 				if(graphPane.getChildren().size() > 0)
 					graphPane.getChildren().remove(0);
 				NumberAxis xAxis = new NumberAxis("Oxidation Temp (C)", oxiLow-5, oxiHigh+5, xtick);
-				NumberAxis yAxis = new NumberAxis("Solar Efficiency (%)", (calcs[0]-.1),(calcs[calcs.length-1])+.1, 1);
+				NumberAxis yAxis = new NumberAxis("Solar Efficiency (%)", (calcs[0]-.1),(max)+.1, 1);
 				LineChart h2Graph = new LineChart(xAxis, yAxis);
 				h2Graph.setMinSize(862, 478);
 				h2Graph.setMaxSize(862, 478);
@@ -457,7 +465,7 @@ public class SceneController extends AnchorPane{
 				h2Graph.getData().add(series);
 				h2Graph.setCreateSymbols(false);
 				h2Graph.setLegendVisible(false);
-				solarToFuelEfficiency.setText(Double.toString(calcs[calcs.length-1]));
+				solarToFuelEfficiency.setText(Double.toString(max));
 			}catch(Exception e){
 				e.printStackTrace();
 			}

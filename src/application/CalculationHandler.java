@@ -284,7 +284,7 @@ public class CalculationHandler {
 		int totalLoops = (int)(m_oxidationTemp2 - m_oxidationTemp);
 		double[] solarToFuelList = new double[totalLoops];
 		int count = 0;
-		
+
 		while (m_oxidationTemp<m_oxidationTemp2)
 		{
 
@@ -424,12 +424,17 @@ public class CalculationHandler {
 			m_thermalEffOut= Math.ceil(m_thermalEffOut*10)/10;
 			// System.out.println("m_thermalEffOut = " + m_thermalEffOut);
 
-			if (m_solartoFuelEff>m_temp)
-			{
-				m_solartoFuelEff=m_solartoFuelEff;	
+			if(count > 0){
+				if(m_solartoFuelEff > solarToFuelList[count-1]){
+					if (m_solartoFuelEff>m_temp)
+					{
+						m_solartoFuelEff=m_solartoFuelEff;	
+					}
+					else m_solartoFuelEff=m_temp;
+					m_temp=m_solartoFuelEff;
+				}
 			}
-			else m_solartoFuelEff=m_temp;
-			m_temp=m_solartoFuelEff;
+
 			m_oxidationTemp=m_oxidationTemp+1;
 
 			solarToFuelList[count] = m_solartoFuelEff;
