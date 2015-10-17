@@ -27,24 +27,66 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Solar DNI" />
-                  <Label text="Cavity Emissivity" GridPane.rowIndex="2" />
-                  <Label text="Heliostate Reflectivity" GridPane.rowIndex="3" />
+                  <Label text="Solar DNI">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Cavity Emissivity" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Heliostate Reflectivity" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="solarDNI" onKeyReleased="#solarDNIKeyReleased" promptText="300 - 1500" styleClass="editableTBs" GridPane.columnIndex="1" />
                   <TextField fx:id="conFactor" onKeyReleased="#conFactorKeyReleased" promptText="1500 - 3500" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="emiss" onKeyReleased="#emissKeyReleased" promptText="0.7 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="W/m²" GridPane.columnIndex="2" />
-                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label text="W/m²" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="reflectOne" onKeyReleased="#reflectOneKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Concentration Factor" GridPane.rowIndex="1" />
-                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label text="Dirt Factor" GridPane.rowIndex="4" />
-                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <Label text="Window Transmission" GridPane.rowIndex="5" />
-                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                  <Label text="Receiver Intercept" GridPane.rowIndex="6" />
-                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                  <Label text="Concentration Factor" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Dirt Factor" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Window Transmission" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Receiver Intercept" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="[-]" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="recIntercept" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="0.95" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <TextField fx:id="dirtFactor" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="0.95" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <TextField fx:id="winTrans" editable="false" focusTraversable="false" styleClass="uneditableTBs" text="0.95" GridPane.columnIndex="1" GridPane.rowIndex="5" />
@@ -56,18 +98,39 @@
             <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Efficiencies" />
             <GridPane layoutX="21.0" layoutY="41.0" prefHeight="199.0" prefWidth="339.0">
                <children>
-                  <Label text="Solar to Electricity" />
-                  <Label text="Heat to Electricity" GridPane.rowIndex="1" />
+                  <Label text="Solar to Electricity">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Heat to Electricity" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="solarToElec" onKeyReleased="#solarToElecKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" />
                   <TextField fx:id="heatToElec" onKeyReleased="#heatToElecKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Lifting (Elevator)" GridPane.rowIndex="2" />
-                  <Label text="Isothermal Pumping" GridPane.rowIndex="3" />
-                  <Label text="Solid - Solid Recuperator" GridPane.rowIndex="4" />
+                  <Label text="Lifting (Elevator)" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Isothermal Pumping" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Solid - Solid Recuperator" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="lifting" onKeyReleased="#liftingKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="elecToPump" onKeyReleased="#elecToPumpKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="solidToSolid" onKeyReleased="#solidToSolidKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="Gas - Gas &lt; 1000 °C" GridPane.rowIndex="5" />
-                  <Label text="Gas - Gas &gt; 1000 °C" GridPane.rowIndex="6" />
+                  <Label text="Gas - Gas &lt; 1000 °C" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Gas - Gas &gt; 1000 °C" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="gasLess" onKeyReleased="#gasLessKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <TextField fx:id="gasGreat" onKeyReleased="#gasGreatKeyReleased" promptText="0.0 - 1.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                </children>
@@ -93,7 +156,10 @@
             <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Redox Temperatures" />
             <GridPane layoutX="21.0" layoutY="41.0" prefHeight="136.0" prefWidth="339.0">
                <children>
-                  <Label text="Reduction Temp" />
+                  <Label text="Reduction Temp">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                   <Label text="Oxidation Temperatures" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="12.0" />
@@ -101,14 +167,35 @@
                   <TextField fx:id="reducTemp" onKeyReleased="#reducTempKeyReleased" prefHeight="23.0" prefWidth="100.0" promptText="1300 - 1600" styleClass="editableTBs" GridPane.columnIndex="1" />
                   <TextField fx:id="thermalReduc" onKeyReleased="#thermalReducKeyReleased" prefHeight="23.0" prefWidth="100.0" promptText="1 - 1000" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="oxiTempLow" onKeyReleased="#oxiTempLowKeyReleased" promptText="873.0 - 1673.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="°C" GridPane.columnIndex="2" />
-                  <Label text="°C" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                  <Label text="°C" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label text="°C" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="°C" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="°C" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="oxiTempHigh" onKeyReleased="#oxiTempHighKeyReleased" promptText="873.0 - 1673.0" styleClass="editableTBs" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <Label text="Lower Bound" GridPane.rowIndex="3" />
-                  <Label text="Upper Bound" GridPane.rowIndex="4" />
-                  <Label text="Thermal Reduction Pressure" GridPane.rowIndex="1" />
-                  <Label text="Pa" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="Lower Bound" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Upper Bound" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Thermal Reduction Pressure" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
+                  <Label text="Pa" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                </children>
                <columnConstraints>
                   <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="180.0" minWidth="180.0" prefWidth="180.0" />
@@ -130,9 +217,15 @@
             <Label layoutX="20.0" layoutY="14.0" styleClass="panesubs" text="Material Properties" />
             <GridPane layoutX="21.0" layoutY="41.0" prefHeight="39.0" prefWidth="339.0">
                <children>
-                  <Label text="Oxide Specific Heat" />
+                  <Label text="Oxide Specific Heat">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="fuelSpecHeat" alignment="CENTER_RIGHT" onKeyReleased="#fuelSpecHeatKeyReleased" promptText="0 - 200" styleClass="editableTBs" GridPane.columnIndex="1" />
-                  <Label text="J/molK" GridPane.columnIndex="2" />
+                  <Label text="J/molK" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                </children>
                <columnConstraints>
                   <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="165.0" minWidth="165.0" prefWidth="165.0" />
@@ -150,9 +243,15 @@
             <Label layoutX="20.0" layoutY="8.0" styleClass="panesubs" text="Output" />
             <GridPane layoutX="21.0" layoutY="71.0" prefHeight="39.0" prefWidth="339.0">
                <children>
-                  <Label text="Peak Solar To Fuel Efficiency" />
+                  <Label text="Peak Solar To Fuel Efficiency">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                   <TextField fx:id="solarToFuelEfficiency" editable="false" focusTraversable="false" styleClass="uneditableTBs" GridPane.columnIndex="1" />
-                  <Label text="\%" GridPane.columnIndex="2" />
+                  <Label text="\%" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Label>
                </children>
                <columnConstraints>
                   <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="170.0" minWidth="170.0" prefWidth="170.0" />
@@ -182,8 +281,14 @@
                      <toggleGroup>
                         <ToggleGroup fx:id="heatRadios" />
                      </toggleGroup>
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Lower Heating Value" toggleGroup="$heatRadios" GridPane.columnIndex="1" />
+                  <RadioButton mnemonicParsing="false" text="Lower Heating Value" toggleGroup="$heatRadios" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></RadioButton>
                </children>
             </GridPane>
          </children>
