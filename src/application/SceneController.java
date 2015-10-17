@@ -438,10 +438,14 @@ public class SceneController extends AnchorPane{
 	        series.setName("efficiency");
 	        
 	        double max = calcs[0];
+	        double min = calcs[0];
 	        
 	        for(int x = 0; x < calcs.length; x++){
 	        	if(max < calcs[x]){
 	        		max = calcs[x];
+	        	}
+	        	if(min > calcs[x]){
+	        		min = calcs[x];
 	        	}
 	        }
 
@@ -457,7 +461,7 @@ public class SceneController extends AnchorPane{
 				if(graphPane.getChildren().size() > 0)
 					graphPane.getChildren().remove(0);
 				NumberAxis xAxis = new NumberAxis("Oxidation Temp (C)", oxiLow-5, oxiHigh+5, xtick);
-				NumberAxis yAxis = new NumberAxis("Solar Efficiency (%)", (calcs[0]-.1),(max)+.1, 1);
+				NumberAxis yAxis = new NumberAxis("Solar Efficiency (%)", min-.1,(max)+.1, 1);
 				LineChart h2Graph = new LineChart(xAxis, yAxis);
 				h2Graph.setMinSize(862, 478);
 				h2Graph.setMaxSize(862, 478);
