@@ -255,8 +255,8 @@ public class CalculationHandler {
 			m_steamEff1001 = Double.parseDouble(values[10]);
 			m_reductionTemp = Double.parseDouble(values[11]);
 			m_themredpressure = Double.parseDouble(values[12]);
-			m_oxidationTemp2 = Double.parseDouble(values[13]);
-			m_oxidationTemp = Double.parseDouble(values[14]);
+			m_oxidationTemp = Double.parseDouble(values[13]);
+			m_oxidationTemp2 = Double.parseDouble(values[14]);
 			m_specHeatFuel = Double.parseDouble(values[15]);
 			m_heatingvalue = Integer.parseInt(values[16]);
 		}catch(Exception e){
@@ -285,7 +285,7 @@ public class CalculationHandler {
 		double[] solarToFuelList = new double[totalLoops];
 		int count = 0;
 
-		while (m_oxidationTemp>m_oxidationTemp2)
+		while (m_oxidationTemp<=m_oxidationTemp2)
 		{
 
 			m_oxidationTempC=m_oxidationTemp-273;
@@ -435,7 +435,7 @@ public class CalculationHandler {
 				}
 			}
 
-			m_oxidationTemp-=1;
+			m_oxidationTemp+=1;
 
 			solarToFuelList[count] = m_solartoFuelEff;
 
