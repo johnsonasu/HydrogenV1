@@ -281,7 +281,7 @@ public class CalculationHandler {
 		m_oxidationTemp2 = m_oxidationTemp2 + 273;
 		m_reductionTemp = m_reductionTemp + 273;
 
-		int totalLoops = (int)(m_oxidationTemp - m_oxidationTemp2);
+		int totalLoops = (int)(m_oxidationTemp2 - m_oxidationTemp)+1;
 		double[] solarToFuelList = new double[totalLoops];
 		int count = 0;
 
