@@ -87,7 +87,7 @@ public class SceneController extends AnchorPane{
 	public void solarDNIKeyReleased(KeyEvent event) {
 		try{
 			double value = Double.parseDouble(solarDNI.getText());
-			if(value < 300 || value > 1500){
+			if(value < 300 || value > 1000){
 				solarDNI.setStyle("-fx-text-fill:red;");
 				invalidInput[0] = true;
 			}else{
@@ -311,7 +311,7 @@ public class SceneController extends AnchorPane{
 	public void oxiTempLowKeyReleased(KeyEvent event) {
 		try{
 			double value = Double.parseDouble(oxiTempLow.getText());
-			if(value < 873 || value > 1673){
+			if(value < 500 || value > 1673){
 				oxiTempLow.setStyle("-fx-text-fill:red;");
 				invalidInput[13] = true;
 			}else{
@@ -328,7 +328,7 @@ public class SceneController extends AnchorPane{
 	public void oxiTempHighKeyReleased(KeyEvent event) {
 		try{
 			double value = Double.parseDouble(oxiTempHigh.getText());
-			if(value < 873 || value > 1673){
+			if(value < 500 || value > 1673){
 				oxiTempHigh.setStyle("-fx-text-fill:red;");
 				invalidInput[14] = true;
 			}else{
@@ -454,6 +454,11 @@ public class SceneController extends AnchorPane{
 				double oxiHigh = Double.parseDouble(oxiTempHigh.getText().toString());
 				int tick = (int)(oxiHigh - oxiLow)/5;
 				double xtick = (oxiHigh - oxiLow)/20;
+				/*
+				if (oxiHigh - oxiLow < 20){
+					xtick = (oxiHigh - oxiLow)%20;
+				}
+				*/
 
 				for (int x = 0; x < calcs.length; x++){
 					series.getData().add(new XYChart.Data(x+oxiLow, calcs[x]));
