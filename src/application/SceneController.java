@@ -276,7 +276,7 @@ public class SceneController extends AnchorPane{
 	public void reducTempKeyReleased(KeyEvent event) {
 		try{
 			double value = Double.parseDouble(reducTemp.getText());
-			if(value < 1300 || value > 1600){
+			if(value < 1300 || value > 1700){
 				reducTemp.setStyle("-fx-text-fill:red;");
 				invalidInput[11] = true;
 			}else{
@@ -311,7 +311,7 @@ public class SceneController extends AnchorPane{
 	public void oxiTempLowKeyReleased(KeyEvent event) {
 		try{
 			double value = Double.parseDouble(oxiTempLow.getText());
-			if(value < 500 || value > 1673){
+			if(value < 500 || value > 1700){
 				oxiTempLow.setStyle("-fx-text-fill:red;");
 				invalidInput[13] = true;
 			}else{
@@ -328,7 +328,7 @@ public class SceneController extends AnchorPane{
 	public void oxiTempHighKeyReleased(KeyEvent event) {
 		try{
 			double value = Double.parseDouble(oxiTempHigh.getText());
-			if(value < 500 || value > 1673){
+			if(value < 500 || value > 1700){
 				oxiTempHigh.setStyle("-fx-text-fill:red;");
 				invalidInput[14] = true;
 			}else{
