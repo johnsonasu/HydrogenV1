@@ -3,6 +3,8 @@ package application;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
@@ -474,7 +476,8 @@ public class SceneController extends AnchorPane{
 				h2Graph.getData().add(series);
 				h2Graph.setCreateSymbols(false);
 				h2Graph.setLegendVisible(false);
-				solarToFuelEfficiency.setText(Double.toString(max));
+				NumberFormat formatter = new DecimalFormat("#.0");     
+				solarToFuelEfficiency.setText(formatter.format(max));
 			}catch(Exception e){
 				e.printStackTrace();
 			}

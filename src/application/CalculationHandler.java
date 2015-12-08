@@ -1,155 +1,155 @@
 package application;
 
 public class CalculationHandler {
-	double m_solarDNI; /**< Solar DNI (Direct Normal Irradiance) [W/m2]. */
-	double m_transmissivity; /**< Transmissivity of dirt on the receiver window [-]. */
-	double m_reductionTemp; /**< Reduction temperature [K]. */
-	double m_oxidationTemp; /**< Oxidation temperature [K]. */
-	double m_emissivity; /**< Reflector re-radiation emissivity [-]. */
-	double m_reflectivity1; /**< Primary mirror reflectivity [-]. */
-	double m_reflectivity2; /**< Secondary mirror reflectivity [-]. */
-	double m_effSolarElec; /**< Solar flux to electricity efficiency [%]. */
-	double m_effHeatElec; /**< Heat energy to electricity efficiency [%]. */
-	double m_effElecPump; /**< Electricity to pumping efficiency [%]. */
-	double m_effLifting; /**< Particle lifiting efficiency [%]. */
-	int m_latentHeat; /**< Latent heat inclusion in code (binary value, 1=yes, 0=no)[-]. */
-	double m_apertureArea; /**< Aperture area [m2]. */
-	double m_dirtFactor; /**< Dirt factor [-]. */
-	double m_windowTransmission; /**< Window transmission [-]. */
-	double m_intercept; /**< Receiver intercept [-]. */
-	double m_molarMassFuel; /**< Molar mass of metal-oxide [g mol-1]. */
-	double m_fuelPowerDensity; /**< CeO2 power density [kg m-3]. */
-	double m_specHeatFuel; /**< Specific heat of metal-oxide, approximated as 15 R for ABO3 [J mol-1 K-1]. */
-	double m_specHeatO2; /** < Specific heat of O2 [J mol-1 K-1]. */
-	double m_specHeatH2; /** < Specific heat of H2 [J mol-1 K-1]. */
-	double m_specHeatSteam;  /**< Specific heat of steam [J mol-1 K-1]. */
-	double m_gravity; /**< Gravity [m/s2]. */
-	double m_H2Concentration; /**< Hydrogen concentration exiting the FP reactor [-]. */
-	double m_molarMassWater; /**< Molar mass of water [g mol-1]. */
-	double m_pressureFP ; /**< Pressure in fuel production chamber [Pa]. */
-	double m_stefanBoltzmann; /**< Stefan-Boltzmann constant [ W m-2 K-4]. */
-	double m_idealGasConstant; /**< Ideal gas constant [ J mol-1 K-1]. */
-	double m_pressureAtm; /**< Atmospheric pressure [Pa]. */
-	double m_tempAtmK; /**< Atmospheric temperature in Kelvin[K]. */
-	double m_tempAtmC; /**< Atmospheric temperature in Celsius [C]. */
-	double m_numWindows; /**< Number of windows in receiver [-]. */
-	double m_areaHelio; /**< Dish/heliostate area [m2]. */
-	double m_evapHeatH2O; /**< Evaporation heat of H2O[J mol-1]. */
-	double m_H2LHV; /**< H2 Lower Heating Value [J mol-1]. */
-	double m_H2HHV; /**< H2 Higher Heating Value [J mol-1]. */
-	double m_deltaTR; /**< Extent of reduction [-]. */
-	double m_solidRecup; /** < Effectivenes of solid-solid recuperator [-]. */
-	double m_steamEff1001; /**< Steam Hrxn > 1000 C efficiency [%]. */
-	double m_steamEff1000; /**< Steam Hrxn < 1000 C efficiency [%]. */
-	double m_pressureRecup; /**< Pressure of recuperator [Pa]. */
-	double m_elevatorHeight; /**< Total elevator height [m]. */
-	double m_elevatorEff; /**< Elevator efficiency [%]. */
-	double m_workPumpIsen; /**< Isentropic pump work [ J]. */
-	double m_curveFitA0; /** < Fit for Fit coefficient (Parameters O2) [-]. */
-	double m_curveFitA1; /** < Fit for Fit coefficient (Parameters O3) [-]. */
-	double m_curveFitA2; /** < Fit for Fit coefficient (Parameters O4) [-]. */
-	double m_curveFitA3; /** < Fit for Fit coefficient (Parameters P2) [-]. */
-	double m_curveFitA4; /** < Fit for Fit coefficient (Parameters P3) [-]. */
-	double m_curveFitA5; /** < Fit for Fit coefficient (Parameters P4) [-]. */
-	double m_curveFitA6; /** < Fit for Fit coefficient (Parameters Q2) [-]. */
-	double m_curveFitA7; /** < Fit for Fit coefficient (Parameters Q3) [-]. */
-	double m_curveFitA8; /** < Fit for Fit coefficient (Parameters Q4) [-]. */
-	double m_curveFitC0; /** < Fit for Fit coefficient (Parameters O7) [-]. */
-	double m_curveFitC1; /** < Fit for Fit coefficient (Parameters O8) [-]. */
-	double m_curveFitC2; /** < Fit for Fit coefficient (Parameters O9) [-]. */
-	double m_curveFitC3; /** < Fit for Fit coefficient (Parameters N7) [-]. */
-	double m_curveFitC4; /** < Fit for Fit coefficient (Parameters N8) [-]. */
-	double m_curveFitC5; /** < Fit for Fit coefficient (Parameters N9) [-]. */
-	double m_curveFitC6; /** < Fit for Fit coefficient (Parameters P7) [-]. */
-	double m_curveFitC7; /** < Fit for Fit coefficient (Parameters P8) [-]. */
-	double m_curveFitC8; /** < Fit for Fit coefficient (Parameters P9) [-]. */
-	double m_deltaHx0; /** < delta_H(x)_ZN_MA coefficient (Parameters F34) [-]. */
-	double m_deltaHx1; /** < delta_H(x)_ZN_MA coefficient (Parameters F35) [-]. */
-	double m_deltaHx2; /** < delta_H(x)_ZN_MA coefficient (Parameters F36) [-]. */
-	double m_td2H2Op0; /** < Water dissassociation coefficient pO2 (TD2_H2O B2) [-]. */
-	double m_td2H2Op1; /** < Water dissassociation coefficient pO2 (TD2_H2O B3) [-]. */
-	double m_td2H2Op2; /** < Water dissassociation coefficient pO2 (TD2_H2O B4) [-]. */
-	double m_td2H2Op3; /** < Water dissassociation coefficient pO2 (TD2_H2O B5) [-]. */
-	double m_td2H2Op4; /** < Water dissassociation coefficient pO2 (TD2_H2O B6) [-]. */
-	double m_td2H2Op5; /** < Water dissassociation coefficient pO2 (TD2_H2O B7) [-]. */
-	double m_td2H2Op6; /** < Water dissassociation coefficient pO2 (TD2_H2O B8) [-]. */
-	double m_td2H2Op7; /** < Water dissassociation coefficient pO2 (TD2_H2O B9) [-]. */
-	double m_td2H2Op8; /** < Water dissassociation coefficient pO2 (TD2_H2O B10) [-]. */
-	double m_td2H2OK0; /** < Water dissassociation coefficient pO2 (TD2_H2O B13) [-]. */
-	double m_td2H2OK1; /** < Water dissassociation coefficient pO2 (TD2_H2O B14) [-]. */
-	double m_td2H2OK2; /** < Water dissassociation coefficient pO2 (TD2_H2O B15) [-]. */
-	double m_td2H2OK3; /** < Water dissassociation coefficient pO2 (TD2_H2O B16) [-]. */
-	double m_td2H2OK4; /** < Water dissassociation coefficient pO2 (TD2_H2O B17) [-]. */
-	double m_td2H2OK5; /** < Water dissassociation coefficient pO2 (TD2_H2O B18) [-]. */
-	double m_td2H2OK6; /** < Water dissassociation coefficient pO2 (TD2_H2O B19) [-]. */
-	double m_td2H2OK7; /** < Water dissassociation coefficient pO2 (TD2_H2O B20) [-]. */
-	double m_td2H2OK8; /** < Water dissassociation coefficient pO2 (TD2_H2O B21) [-]. */
-	double m_enthalpyReduction; /**< Reduction enthalpy per mol O2 [g mol-1]. */
-	double m_areaAper; /**< Receiver aperture area [m2]. */
-	double m_solarFieldEff; /**< Solar field efficiency [%]. */
-	double m_reflectivity; /**< Total reflectivity [-]. */
-	double m_incidentPowerPrimary; /**< Incident power on primary concentrator [W]. */
-	double m_incidentPowerRef1; /**< Incident power after first reflection [W]. */
-	double m_incidentPowerRef2; /**< Incident power after second reflection [W]. */
-	double m_heatMirrorSecondary; /**< Heat on secondary mirror [W]. */
-	double m_incidentPowerTrans; /**< Incident power through transmission window - into aperature [W]. */
-	double m_incidentPowerAper; /**< Incident power into aperature window [W]. */
-	double m_heatSpillAper; /**< Spill power around the aperature [W]. */
-	double m_incidentPowerTotal; /**< Total net flux into the reactor [W]. */
-	double m_tempStep; /**< Temperature steps [K]. */
-	double m_tempFuelProd; /**< Fuel production temperature [K]. */
-	double m_logPressureO2; /** < Log pressure of the fuel chamber with O2 [-]. */
-	double m_partialPressureO2; /**< Partial pressure of O2 [-]. */
-	double m_polyFit1; /**< Polynomial fit to Log[pO2/p0] and temperature [-]. */
-	double m_polyFit2; /**< Polynomial fit to Log[pO2/p0] and temperature [-]. */
-	double m_polyFit3; /**< Polynomial fit to Log[pO2/p0] and temperature [-]. */
-	double m_deltaOx; /**< Extent of the oxidation reaction [-]. */
-	double m_deltaDelta; /**< Extent of the redox reaction (inclusive of reduction + oxidation) [-]. */
-	double m_enthalpyRedO2; /**< Reduction enthalpy TO given delta, per mol O2 [J mol-1]. */
-	double m_enthalpyRedDelta; /**< Integrated reduction enthalpy TO given delta, per mol H2 (or mol O) [J mol-1]. */
-	double m_enthalpyRedAvg; /**< Average reduction enthalpy [J mol-1]. */
-	double m_ratioOxToH2; /**< Ratio of oxide to H2 [-]. */
-	double m_polyFitFP1; /**< Polynomial fit for FP pressure [-]. */
-	double m_polyFitFP2; /**< Polynomial fit for FP pressure [-]. */
-	double m_polyFitFP3; /**< Polynomial fit for FP pressure [-]. */
-	double m_pressureOxide; /**< Oxide pressure [Pa]. */
-	double m_dissocConst; /**< Disassociation constant of water as calculated from the TD2_H20 tab [-]. */
-	double m_ratioH2OToH2; /**< Ratio of H2O to H2 [-]. */
-	double m_qLift; /**< Heat equivelent of oxide lifting work, per mol H2 [W]. */
-	double m_qOxHt; /**< Q for oxide heating, per mol H2, at given recuperation effectiveness [W]. */
-	double m_qRt; /**< Q for heating from room temperature to 100 C [W]. */
-	double m_qPex; /**< Compression work + actual heat of not recovered from the recuperator [W]. */
-	double m_qHeat1000; /**< Heat from 100 to 1000 C [W]. */
-	double m_qHeat1001; /**< Heating steam from 1000 C to reoxidation temp [W]. */
-	double m_qH2Ophase; /**< Total heat needed to change the water phases [W]. */
-	double m_qPmp; /**< Heat equivalent of H2 pumping work, per mol H2 [W]. */
-	double m_qPmpTotal; /**< Heat equivalent of total pumping work, per mol H2 [W]. */
-	double m_qReox; /**< Heat released in reoxidation reaction, per mol H2 [W]. */
-	double m_qAuxNt; /**< Net waste heat from hot oxide and reoxidation, after used for heat equivalents of all other reactor needs, per mol H2 [W]. */
-	double m_qNeed; /**< Solar heat needed per mol H2. Sum of heat for oxide heating and thermal reduction (+ heat for mechanical components if not enough waste heat) [W]. */
-	double m_molH2Output; /**< Thermochemical H2 output in mol/s [mol s-1]. */
-	double m_wattH2Output; /**< Thermochemical H2 output in W [W]. */
-	double m_reactorEffOut; /**< Thermal efficiency=H2 output/heat available after collection losses [%]. */
-	double m_solartoFuelEff; /**< Solar efficiency=H2 output/primary solar power [%]. */
-	double m_thermalEffOut; /**< Thermal efficieny: all the heat in the reactor, how much gets converted to H2 [%]. */
-	double m_numberhelio;
-	double m_specHeatH2O;
-	double m_qPump;
-	double m_qO2;
-	double m_oxidationTempC;
-	double m_LHRp;
-	double m_pressureAtmatm;
-	double m_tempVapor;
-	int  m_heatingvalue;
-	double m_H2HV=0;
-	double m_concfactor;
-	double m_themredpressure;
-	double m_fitcoef1;
-	double m_fitcoef2;
-	double m_fitcoef3;
-	double m_oxidationTemp2;
-	double m_temp;
-	String[] values;
+	private double m_solarDNI; /**< Solar DNI (Direct Normal Irradiance) [W/m2]. */
+	private double m_transmissivity; /**< Transmissivity of dirt on the receiver window [-]. */
+	private double m_reductionTemp; /**< Reduction temperature [K]. */
+	private double m_oxidationTemp; /**< Oxidation temperature [K]. */
+	private double m_emissivity; /**< Reflector re-radiation emissivity [-]. */
+	private double m_reflectivity1; /**< Primary mirror reflectivity [-]. */
+	private double m_reflectivity2; /**< Secondary mirror reflectivity [-]. */
+	private double m_effSolarElec; /**< Solar flux to electricity efficiency [%]. */
+	private double m_effHeatElec; /**< Heat energy to electricity efficiency [%]. */
+	private double m_effElecPump; /**< Electricity to pumping efficiency [%]. */
+	private double m_effLifting; /**< Particle lifiting efficiency [%]. */
+	private int m_latentHeat; /**< Latent heat inclusion in code (binary value, 1=yes, 0=no)[-]. */
+	private double m_apertureArea; /**< Aperture area [m2]. */
+	private double m_dirtFactor; /**< Dirt factor [-]. */
+	private double m_windowTransmission; /**< Window transmission [-]. */
+	private double m_intercept; /**< Receiver intercept [-]. */
+	private double m_molarMassFuel; /**< Molar mass of metal-oxide [g mol-1]. */
+	private double m_fuelPowerDensity; /**< CeO2 power density [kg m-3]. */
+	private double m_specHeatFuel; /**< Specific heat of metal-oxide, approximated as 15 R for ABO3 [J mol-1 K-1]. */
+	private double m_specHeatO2; /** < Specific heat of O2 [J mol-1 K-1]. */
+	private double m_specHeatH2; /** < Specific heat of H2 [J mol-1 K-1]. */
+	private double m_specHeatSteam;  /**< Specific heat of steam [J mol-1 K-1]. */
+	private double m_gravity; /**< Gravity [m/s2]. */
+	private double m_H2Concentration; /**< Hydrogen concentration exiting the FP reactor [-]. */
+	private double m_molarMassWater; /**< Molar mass of water [g mol-1]. */
+	private double m_pressureFP ; /**< Pressure in fuel production chamber [Pa]. */
+	private double m_stefanBoltzmann; /**< Stefan-Boltzmann constant [ W m-2 K-4]. */
+	private double m_idealGasConstant; /**< Ideal gas constant [ J mol-1 K-1]. */
+	private double m_pressureAtm; /**< Atmospheric pressure [Pa]. */
+	private double m_tempAtmK; /**< Atmospheric temperature in Kelvin[K]. */
+	private double m_tempAtmC; /**< Atmospheric temperature in Celsius [C]. */
+	private double m_numWindows; /**< Number of windows in receiver [-]. */
+	private double m_areaHelio; /**< Dish/heliostate area [m2]. */
+	private double m_evapHeatH2O; /**< Evaporation heat of H2O[J mol-1]. */
+	private double m_H2LHV; /**< H2 Lower Heating Value [J mol-1]. */
+	private double m_H2HHV; /**< H2 Higher Heating Value [J mol-1]. */
+	private double m_deltaTR; /**< Extent of reduction [-]. */
+	private double m_solidRecup; /** < Effectivenes of solid-solid recuperator [-]. */
+	private double m_steamEff1001; /**< Steam Hrxn > 1000 C efficiency [%]. */
+	private double m_steamEff1000; /**< Steam Hrxn < 1000 C efficiency [%]. */
+	private double m_pressureRecup; /**< Pressure of recuperator [Pa]. */
+	private double m_elevatorHeight; /**< Total elevator height [m]. */
+	private double m_elevatorEff; /**< Elevator efficiency [%]. */
+	private double m_workPumpIsen; /**< Isentropic pump work [ J]. */
+	private double m_curveFitA0; /** < Fit for Fit coefficient (Parameters O2) [-]. */
+	private double m_curveFitA1; /** < Fit for Fit coefficient (Parameters O3) [-]. */
+	private double m_curveFitA2; /** < Fit for Fit coefficient (Parameters O4) [-]. */
+	private double m_curveFitA3; /** < Fit for Fit coefficient (Parameters P2) [-]. */
+	private double m_curveFitA4; /** < Fit for Fit coefficient (Parameters P3) [-]. */
+	private double m_curveFitA5; /** < Fit for Fit coefficient (Parameters P4) [-]. */
+	private double m_curveFitA6; /** < Fit for Fit coefficient (Parameters Q2) [-]. */
+	private double m_curveFitA7; /** < Fit for Fit coefficient (Parameters Q3) [-]. */
+	private double m_curveFitA8; /** < Fit for Fit coefficient (Parameters Q4) [-]. */
+	private double m_curveFitC0; /** < Fit for Fit coefficient (Parameters O7) [-]. */
+	private double m_curveFitC1; /** < Fit for Fit coefficient (Parameters O8) [-]. */
+	private double m_curveFitC2; /** < Fit for Fit coefficient (Parameters O9) [-]. */
+	private double m_curveFitC3; /** < Fit for Fit coefficient (Parameters N7) [-]. */
+	private double m_curveFitC4; /** < Fit for Fit coefficient (Parameters N8) [-]. */
+	private double m_curveFitC5; /** < Fit for Fit coefficient (Parameters N9) [-]. */
+	private double m_curveFitC6; /** < Fit for Fit coefficient (Parameters P7) [-]. */
+	private double m_curveFitC7; /** < Fit for Fit coefficient (Parameters P8) [-]. */
+	private double m_curveFitC8; /** < Fit for Fit coefficient (Parameters P9) [-]. */
+	private double m_deltaHx0; /** < delta_H(x)_ZN_MA coefficient (Parameters F34) [-]. */
+	private double m_deltaHx1; /** < delta_H(x)_ZN_MA coefficient (Parameters F35) [-]. */
+	private double m_deltaHx2; /** < delta_H(x)_ZN_MA coefficient (Parameters F36) [-]. */
+	private double m_td2H2Op0; /** < Water dissassociation coefficient pO2 (TD2_H2O B2) [-]. */
+	private double m_td2H2Op1; /** < Water dissassociation coefficient pO2 (TD2_H2O B3) [-]. */
+	private double m_td2H2Op2; /** < Water dissassociation coefficient pO2 (TD2_H2O B4) [-]. */
+	private double m_td2H2Op3; /** < Water dissassociation coefficient pO2 (TD2_H2O B5) [-]. */
+	private double m_td2H2Op4; /** < Water dissassociation coefficient pO2 (TD2_H2O B6) [-]. */
+	private double m_td2H2Op5; /** < Water dissassociation coefficient pO2 (TD2_H2O B7) [-]. */
+	private double m_td2H2Op6; /** < Water dissassociation coefficient pO2 (TD2_H2O B8) [-]. */
+	private double m_td2H2Op7; /** < Water dissassociation coefficient pO2 (TD2_H2O B9) [-]. */
+	private double m_td2H2Op8; /** < Water dissassociation coefficient pO2 (TD2_H2O B10) [-]. */
+	private double m_td2H2OK0; /** < Water dissassociation coefficient pO2 (TD2_H2O B13) [-]. */
+	private double m_td2H2OK1; /** < Water dissassociation coefficient pO2 (TD2_H2O B14) [-]. */
+	private double m_td2H2OK2; /** < Water dissassociation coefficient pO2 (TD2_H2O B15) [-]. */
+	private double m_td2H2OK3; /** < Water dissassociation coefficient pO2 (TD2_H2O B16) [-]. */
+	private double m_td2H2OK4; /** < Water dissassociation coefficient pO2 (TD2_H2O B17) [-]. */
+	private double m_td2H2OK5; /** < Water dissassociation coefficient pO2 (TD2_H2O B18) [-]. */
+	private double m_td2H2OK6; /** < Water dissassociation coefficient pO2 (TD2_H2O B19) [-]. */
+	private double m_td2H2OK7; /** < Water dissassociation coefficient pO2 (TD2_H2O B20) [-]. */
+	private double m_td2H2OK8; /** < Water dissassociation coefficient pO2 (TD2_H2O B21) [-]. */
+	private double m_enthalpyReduction; /**< Reduction enthalpy per mol O2 [g mol-1]. */
+	private double m_areaAper; /**< Receiver aperture area [m2]. */
+	private double m_solarFieldEff; /**< Solar field efficiency [%]. */
+	private double m_reflectivity; /**< Total reflectivity [-]. */
+	private double m_incidentPowerPrimary; /**< Incident power on primary concentrator [W]. */
+	private double m_incidentPowerRef1; /**< Incident power after first reflection [W]. */
+	private double m_incidentPowerRef2; /**< Incident power after second reflection [W]. */
+	private double m_heatMirrorSecondary; /**< Heat on secondary mirror [W]. */
+	private double m_incidentPowerTrans; /**< Incident power through transmission window - into aperature [W]. */
+	private double m_incidentPowerAper; /**< Incident power into aperature window [W]. */
+	private double m_heatSpillAper; /**< Spill power around the aperature [W]. */
+	private double m_incidentPowerTotal; /**< Total net flux into the reactor [W]. */
+	private double m_tempStep; /**< Temperature steps [K]. */
+	private double m_tempFuelProd; /**< Fuel production temperature [K]. */
+	private double m_logPressureO2; /** < Log pressure of the fuel chamber with O2 [-]. */
+	private double m_partialPressureO2; /**< Partial pressure of O2 [-]. */
+	private double m_polyFit1; /**< Polynomial fit to Log[pO2/p0] and temperature [-]. */
+	private double m_polyFit2; /**< Polynomial fit to Log[pO2/p0] and temperature [-]. */
+	private double m_polyFit3; /**< Polynomial fit to Log[pO2/p0] and temperature [-]. */
+	private double m_deltaOx; /**< Extent of the oxidation reaction [-]. */
+	private double m_deltaDelta; /**< Extent of the redox reaction (inclusive of reduction + oxidation) [-]. */
+	private double m_enthalpyRedO2; /**< Reduction enthalpy TO given delta, per mol O2 [J mol-1]. */
+	private double m_enthalpyRedDelta; /**< Integrated reduction enthalpy TO given delta, per mol H2 (or mol O) [J mol-1]. */
+	private double m_enthalpyRedAvg; /**< Average reduction enthalpy [J mol-1]. */
+	private double m_ratioOxToH2; /**< Ratio of oxide to H2 [-]. */
+	private double m_polyFitFP1; /**< Polynomial fit for FP pressure [-]. */
+	private double m_polyFitFP2; /**< Polynomial fit for FP pressure [-]. */
+	private double m_polyFitFP3; /**< Polynomial fit for FP pressure [-]. */
+	private double m_pressureOxide; /**< Oxide pressure [Pa]. */
+	private double m_dissocConst; /**< Disassociation constant of water as calculated from the TD2_H20 tab [-]. */
+	private double m_ratioH2OToH2; /**< Ratio of H2O to H2 [-]. */
+	private double m_qLift; /**< Heat equivelent of oxide lifting work, per mol H2 [W]. */
+	private double m_qOxHt; /**< Q for oxide heating, per mol H2, at given recuperation effectiveness [W]. */
+	private double m_qRt; /**< Q for heating from room temperature to 100 C [W]. */
+	private double m_qPex; /**< Compression work + actual heat of not recovered from the recuperator [W]. */
+	private double m_qHeat1000; /**< Heat from 100 to 1000 C [W]. */
+	private double m_qHeat1001; /**< Heating steam from 1000 C to reoxidation temp [W]. */
+	private double m_qH2Ophase; /**< Total heat needed to change the water phases [W]. */
+	private double m_qPmp; /**< Heat equivalent of H2 pumping work, per mol H2 [W]. */
+	private double m_qPmpTotal; /**< Heat equivalent of total pumping work, per mol H2 [W]. */
+	private double m_qReox; /**< Heat released in reoxidation reaction, per mol H2 [W]. */
+	private double m_qAuxNt; /**< Net waste heat from hot oxide and reoxidation, after used for heat equivalents of all other reactor needs, per mol H2 [W]. */
+	private double m_qNeed; /**< Solar heat needed per mol H2. Sum of heat for oxide heating and thermal reduction (+ heat for mechanical components if not enough waste heat) [W]. */
+	private double m_molH2Output; /**< Thermochemical H2 output in mol/s [mol s-1]. */
+	private double m_wattH2Output; /**< Thermochemical H2 output in W [W]. */
+	private double m_reactorEffOut; /**< Thermal efficiency=H2 output/heat available after collection losses [%]. */
+	private double m_solartoFuelEff; /**< Solar efficiency=H2 output/primary solar power [%]. */
+	private double m_thermalEffOut; /**< Thermal efficieny: all the heat in the reactor, how much gets converted to H2 [%]. */
+	private double m_numberhelio;
+	private double m_specHeatH2O;
+	private double m_qPump;
+	private double m_qO2;
+	private double m_oxidationTempC;
+	private double m_LHRp;
+	private double m_pressureAtmatm;
+	private double m_tempVapor;
+	private int  m_heatingvalue;
+	private double m_H2HV=0;
+	private double m_concfactor;
+	private double m_themredpressure;
+	private double m_fitcoef1;
+	private double m_fitcoef2;
+	private double m_fitcoef3;
+	private double m_oxidationTemp2;
+	private double m_temp;
+	private String[] values;
 
 	public CalculationHandler(String[] values){
 		m_dirtFactor = 0.95;
@@ -333,6 +333,14 @@ public class CalculationHandler {
 			// System.out.println("m_enthalpyRedDelta = " + m_enthalpyRedDelta);
 			m_deltaTR= Math.pow(10,(m_fitcoef1+m_fitcoef2*Math.log10(m_themredpressure)+m_fitcoef3*Math.log10(Math.pow(m_themredpressure,2))));
 			// System.out.println("m_deltaTR = " + m_deltaTR);
+			
+			m_fitcoef1 = m_curveFitA0 + (m_curveFitA1 * m_reductionTemp )+(m_curveFitA2 * m_reductionTemp * m_reductionTemp);
+					
+			m_fitcoef2 = m_curveFitA3 + (m_curveFitA4 * m_reductionTemp )+(m_curveFitA5 * m_reductionTemp * m_reductionTemp);
+			
+			m_fitcoef3 = m_curveFitA6 + (m_curveFitA7 * m_reductionTemp )+(m_curveFitA8 * m_reductionTemp * m_reductionTemp);
+			
+			
 			m_enthalpyReduction= (m_deltaHx0+(m_deltaHx1*m_deltaTR)+(m_deltaHx2*Math.pow(m_deltaTR,2)))*1000;
 			// System.out.println("m_enthalpyReduction = " + m_enthalpyReduction);
 
@@ -396,6 +404,9 @@ public class CalculationHandler {
 			// System.out.println("m_qPmpTotal = " + m_qPmpTotal);
 			m_qReox=m_enthalpyRedAvg-m_H2HV;
 			// System.out.println("m_qReox = " + m_qReox);
+			
+			m_qO2 = 0.5 * ((m_reductionTemp - 273) - m_tempAtmC)* m_specHeatO2;
+			
 			m_qAuxNt=(m_qOxHt*1)+m_qReox+m_qO2-m_qH2Ophase-m_qPmpTotal-m_qLift-5978.081;
 			// System.out.println("m_qAuxNt = " + m_qAuxNt);
 			if (m_qAuxNt<0)
@@ -419,7 +430,7 @@ public class CalculationHandler {
 			m_reactorEffOut= Math.ceil(m_reactorEffOut*10)/10;
 			// System.out.println("m_reactorEffOut = " + m_reactorEffOut);
 			m_solartoFuelEff=(m_wattH2Output/m_incidentPowerPrimary)*100;
-			m_solartoFuelEff= Math.ceil(m_solartoFuelEff*10)/10;
+			//m_solartoFuelEff= Math.ceil(m_solartoFuelEff*10)/10;
 			m_thermalEffOut=(m_wattH2Output/m_incidentPowerTotal)*100;
 			m_thermalEffOut= Math.ceil(m_thermalEffOut*10)/10;
 			// System.out.println("m_thermalEffOut = " + m_thermalEffOut);
