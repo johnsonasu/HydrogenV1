@@ -444,11 +444,16 @@ public class CalculationHandler {
 					else m_solartoFuelEff=m_temp;
 					m_temp=m_solartoFuelEff;
 				}
+			}else{
+				m_solartoFuelEff=m_temp;
+				m_temp=m_solartoFuelEff;
 			}
 
 			m_oxidationTemp+=1;
 
 			solarToFuelList[count] = m_solartoFuelEff;
+			
+			System.out.println(count+ ": "+ m_solartoFuelEff);
 
 			count++;
 		}

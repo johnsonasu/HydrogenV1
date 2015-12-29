@@ -461,8 +461,7 @@ public class SceneController extends AnchorPane{
 					xtick = (oxiHigh - oxiLow)%20;
 				}
 				*/
-
-				for (int x = 0; x < calcs.length; x++){
+				for (int x = 1; x < calcs.length; x++){
 					series.getData().add(new XYChart.Data(x+oxiLow, calcs[x]));
 				}
 				if(graphPane.getChildren().size() > 0)
